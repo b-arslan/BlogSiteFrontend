@@ -1,0 +1,42 @@
+.darkMode {
+    background-color: #1e1e1e;
+    color: white;
+}
+
+.darkMode .antCardHead {
+    background-color: #333;
+    color: white;
+}
+
+.darkModeEditor {
+    background-color: #2b2b2b;
+    color: white;
+}
+
+.darkMode .antBtn {
+    background-color: #4a4a4a;
+    color: white;
+}
+
+.darkMode .antTooltipInner {
+    background-color: #333;
+    color: white;
+}
+
+.darkMode .antInput {
+    background-color: #333;
+    color: white;
+}
+
+.myBoxShadow {
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    width: 25vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40vh;
+    border-radius: 12px;
+    padding: 0px 24px;
+    flex-direction: column;
+    gap: 3.5rem;
+}
