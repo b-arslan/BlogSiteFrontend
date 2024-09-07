@@ -37,38 +37,33 @@ const Admin = () => {
     const [isAuthorized, setIsAuthorized] = useState(false);
     const router = useRouter();
 
-    // useEffect(() => {
-    //     const token = localStorage.getItem('token');
-
-    //     if (!token) {
-    //         router.push('/auth');
-    //         return
-    //     }
-
-    //     const verifyToken = async () => {
-    //         try {
-    //             const res = await axios.post('/api/verifyToken', { token });
-    //             if (res.status === 200) {
-    //                 setIsAuthorized(true);
-    //             }
-    //         } catch (error) {
-    //             console.error('Token verification failed: ', error);
-    //             router.push('/auth');
-    //         }
-    //     };
-
-    //     verifyToken();
-    // }, [router]);
-
-    // if (!isAuthorized) {
-    //     return (
-    //         <Row>
-    //             <Col span={24} style={{display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh'}}>
-    //                 <Spin indicator={<LoadingOutlined spin style={{ fontSize: '64px', color: '#000', marginTop: '2rem' }} />} />
-    //             </Col>
-    //         </Row>
-    //     );
-    // }
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        const tokenExpiry = localStorage.getItem('tokenExpiry');
+    
+        // If no token or token expiry is found, redirect to login page
+        if (!token || !tokenExpiry) {
+            router.push('/auth');
+            return;
+        }
+    
+        // 2. Check if the token matches (for example, assuming 'sampleAuthToken')
+        const isTokenValid = token === 'sampleAuthToken'; // Adjust this to your real logic
+        if (!isTokenValid) {
+            router.push('/auth');
+            return;
+        }
+    
+        // 3. Check if token has expired
+        const currentTime = new Date().getTime();
+        if (currentTime > Number(tokenExpiry)) {
+            localStorage.removeItem('token'); // Clear expired token
+            localStorage.removeItem('tokenExpiry');
+            router.push('/auth');
+        } else {
+            setIsAuthorized(true); // Allow access if token is valid and not expired
+        }
+    }, [router]);
 
     const toggleDarkMode = () => {
         setDarkMode(!darkMode);
@@ -92,8 +87,16 @@ const Admin = () => {
         content: '<p>Start typing...</p>'
     });
 
+    if (!isAuthorized) {
+        return (
+            <Row>
+                <Col span={24} style={{display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh'}}>
+                    <Spin indicator={<LoadingOutlined spin style={{ fontSize: '64px', color: '#000', marginTop: '2rem' }} />} />
+                </Col>
+            </Row>
+        );
+    }
     //const fileInputRef = useRef<HTMLInputElement>(null);
-
     const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
 
@@ -117,7 +120,26 @@ const Admin = () => {
         return null;
     }
 
+    const handleSubmit = async () => {
+        const content = editor?.getHTML(); // Get the HTML content from the editor
+        const formData = new FormData();
     
+        formData.append('title', 'Your Blog Title'); // Replace with your blog title
+        formData.append('author', 'Author Name'); // Replace with the author name
+        formData.append('content', content || ''); // Editor content in HTML
+        if (fileInputRef.current?.files?.[0]) {
+            formData.append('coverImage', fileInputRef.current.files[0]); // Append the uploaded image
+        }
+    
+        try {
+            const res = await axios.post('https://blog-site-backend-ebon.vercel.app/api/blog', formData, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            });
+            console.log('Blog posted successfully:', res.data);
+        } catch (error) {
+            console.error('Error posting blog:', error);
+        }
+    };    
 
     return (
 
@@ -220,7 +242,7 @@ const Admin = () => {
             <div style={{ padding: '1rem', background: darkMode ? '#333' : '#fff', position: 'sticky', bottom: 0, width: '100%' }}>
                 <Row>
                     <Col span={24}>
-                        <Button style={{ width: '100%', background: darkMode ? '#555' : '#1890ff', color: darkMode ? '#fff' : '#fff' }}>Submit</Button>
+                        <Button onClick={handleSubmit} style={{ width: '100%', background: darkMode ? '#555' : '#1890ff', color: darkMode ? '#fff' : '#fff' }}>Submit</Button>
                     </Col>
                 </Row>
             </div>

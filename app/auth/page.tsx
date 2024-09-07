@@ -13,28 +13,31 @@ type FieldType = {
     remember?: string;
 };
 
-const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-    console.log('Success:', values);
-};
-  
-  const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
+const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
     console.log('Failed:', errorInfo);
 };
 
 const LoginPage = () => {
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
     const router = useRouter();
 
-    const handleSubmit = async (e: { preventDefault: () => void; }) => {
-        e.preventDefault();
+    const onFinish = async (values: FieldType) => {
         try {
-            const res = await axios.post('/api/login', { email, password });
-            const { token } = res.data;
-
+            // Make an API call to your backend for login
+            const res = await axios.post('https://blog-site-backend-ebon.vercel.app/api/login', {
+                email: values.username, // Or map it properly to the "email" in your form
+                password: values.password
+            });
+            
+            const token = res.data.token; // Expect the token to come from your API response
+            const expiresIn = 3600; // 1 hour in seconds
+    
+            const expirationTime = new Date().getTime() + expiresIn * 1000; // Setting expiration 1 hour from now
+    
             localStorage.setItem('token', token);
-
+            localStorage.setItem('tokenExpiry', expirationTime.toString());
+            
+            // Redirect to the admin page after successful login
             router.push('/admin');
         } catch (error) {
             console.error('Login failed: ', error);
@@ -44,10 +47,10 @@ const LoginPage = () => {
     return (
 
         <Layout style={{ height: '100vh' }}>
-            <Content style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+            <Content style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <Row>
                     <Col span={24} className={styles.myBoxShadow} >
-                        
+
                         <h1>Admin Login</h1>
 
                         <Form
