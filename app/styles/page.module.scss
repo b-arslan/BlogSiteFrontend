@@ -6,7 +6,11 @@
 
 .content {
     background: transparent;
-    height: 92vh;
+    min-height: 92vh;
+    padding: 48px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
 }
 
 .layout {
@@ -41,4 +45,18 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
+}
+
+.myImg {
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    border-radius: 12px;
+    width: 500px;
+    height: 500px;
+}
+
+.myDiv {
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    border-radius: 12px;
+    width: 1200px;
+    height: 650px;
 }

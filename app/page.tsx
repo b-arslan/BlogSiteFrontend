@@ -4,6 +4,7 @@ import { Layout, Button, Row, Col, Card } from "antd";
 import { EditOutlined, UserOutlined } from "@ant-design/icons";
 import styles from "./styles/page.module.scss";
 import axios from "axios"; // Assuming axios is used for API calls
+import { useRouter } from "next/navigation";
 
 const { Header, Content } = Layout;
 const { Meta } = Card;
@@ -18,12 +19,14 @@ interface Blog {
 
 const Home = () => {
     const [blogs, setBlogs] = useState<Blog[]>([]);
+    const router = useRouter();
 
     useEffect(() => {
         const getBlogs = async () => {
             try {
                 const response = await axios.get('https://blog-site-backend-ebon.vercel.app/api/blogposts'); // Call your GET API here
                 setBlogs(response.data.content); // Assuming API returns 'content' field with blogs array
+                localStorage.setItem('blogData', JSON.stringify(response.data.content));
             } catch (error) {
                 console.error('Error fetching blogs:', error);
             }
@@ -32,17 +35,22 @@ const Home = () => {
         getBlogs();
     }, []);
 
+    const handleBlogClick = (blog: Blog) => {
+        localStorage.setItem('selectedBlogId', blog.id.toString()); // Store selected blog ID in localStorage
+        router.push('/blogs'); // Navigate to the blogs page
+    };
+
     return (
         <Layout className={styles.layout}>
             <Header style={{ background: "#ffffff", padding: "0px 24px", height: '8vh', textAlign: 'center' }}>
                 <Row style={{ height: '100%' }}>
                     <Col span={12} className={styles.headerCol1}>
-                        <h1 style={{ color: '#111827' }}>Mehmet Aker</h1>
+                        <h1 style={{ color: '#111827', cursor: 'pointer' }} onClick={() => router.push('/')}>Mehmet Aker</h1>
                     </Col>
 
                     <Col span={12} className={styles.headerCol2}>
-                        <Button type='text' className={styles.btn}><EditOutlined /> Blog</Button>
-                        <Button type='text' className={styles.btn}><UserOutlined /> Hakkımda</Button>
+                        <Button href="/blogs" type='text' className={styles.btn}><EditOutlined /> Blog</Button>
+                        <Button href="/about" type='text' className={styles.btn}><UserOutlined /> Hakkımda</Button>
                     </Col>
                 </Row>
             </Header>
@@ -78,6 +86,7 @@ const Home = () => {
                                         style={{ width: 300, height: 150, objectFit: 'cover' }} // 40% height for the image
                                     />
                                 }
+                                onClick={() => router.push(`/blogs?id=${blog.id}`)}
                             >
                                 <Meta
                                     title={
