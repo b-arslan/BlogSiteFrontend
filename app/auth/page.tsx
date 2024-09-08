@@ -29,7 +29,7 @@ const LoginPage = () => {
                 password: values.password
             });
             
-            const token = res.data.token; // Expect the token to come from your API response
+            const token = 'Authorized'; // Expect the token to come from your API response
             const expiresIn = 3600; // 1 hour in seconds
     
             const expirationTime = new Date().getTime() + expiresIn * 1000; // Setting expiration 1 hour from now

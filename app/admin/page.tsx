@@ -8,7 +8,7 @@ import TextAlign from "@tiptap/extension-text-align";
 import Link from "@tiptap/extension-link";
 import Heading from "@tiptap/extension-heading";
 import Image from "@tiptap/extension-image";
-import { Card, Tooltip, Menu, Dropdown, Button, Switch, Layout, Row, Col, Spin } from "antd";
+import { Card, Tooltip, Menu, Dropdown, Button, Switch, Layout, Row, Col, Spin, Alert, Input } from "antd";
 import {
     BoldOutlined,
     ItalicOutlined,
@@ -35,6 +35,10 @@ const Admin = () => {
     const [uploadedImageName, setUploadedImageName] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [isAuthorized, setIsAuthorized] = useState(false);
+    const [loadingBtn, setloadingBtn] = useState(false);
+    const [showSuccess, setShowSuccess] = useState(false);
+    const [showError, setShowError] = useState(false);
+    const [title, setTitle] = useState('');
     const router = useRouter();
 
     useEffect(() => {
@@ -48,7 +52,7 @@ const Admin = () => {
         }
     
         // 2. Check if the token matches (for example, assuming 'sampleAuthToken')
-        const isTokenValid = token === 'sampleAuthToken'; // Adjust this to your real logic
+        const isTokenValid = token === 'Authorized'; // Adjust this to your real logic
         if (!isTokenValid) {
             router.push('/auth');
             return;
@@ -120,12 +124,18 @@ const Admin = () => {
         return null;
     }
 
+    const TitleOnChange = (e: any) => {
+        setTitle(e.target.value);
+        console.log(e.target.value);
+    }
+
     const handleSubmit = async () => {
+        setloadingBtn(true);
         const content = editor?.getHTML(); // Get the HTML content from the editor
         const formData = new FormData();
     
-        formData.append('title', 'Your Blog Title'); // Replace with your blog title
-        formData.append('author', 'Author Name'); // Replace with the author name
+        formData.append('title', title || ''); // Replace with your blog title
+        formData.append('author', 'Mehmet Aker'); // Replace with the author name
         formData.append('content', content || ''); // Editor content in HTML
         if (fileInputRef.current?.files?.[0]) {
             formData.append('coverImage', fileInputRef.current.files[0]); // Append the uploaded image
@@ -136,8 +146,18 @@ const Admin = () => {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
             console.log('Blog posted successfully:', res.data);
+            setShowSuccess(true);
+            setTimeout(() => setShowSuccess(false), 5000);
+            setTitle(''); // Clear the title input
+            setUploadedImageName(null); // Remove uploaded image
+            editor?.commands.clearContent();
+            setloadingBtn(false);
+
         } catch (error) {
             console.error('Error posting blog:', error);
+            setShowError(true);
+            setTimeout(() => setShowError(false), 5000);
+            setloadingBtn(false);
         }
     };    
 
@@ -149,6 +169,14 @@ const Admin = () => {
                     <Col span={24}>
                         <Card title={<span style={{ color: darkMode ? '#fff' : '#000' }}>Blog Editor</span>} style={{ width: '100%', display: 'flex', flexDirection: 'column' }} className={darkMode ? styles.darkMode : ''}>
                             <div style={{ marginBottom: '1rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
+                                
+                                {showSuccess && (
+                                    <Alert message="Upload Successful" type="success" style={{ position: 'fixed', top: '0', right: '0', width: '350px' }} />
+                                )}
+                                {showError && (
+                                    <Alert message="Upload Failed" type="error" style={{ position: 'fixed', top: '0', right: '0', width: '350px' }} />
+                                )}
+
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                                     <Button
                                         icon={<PictureOutlined />}
@@ -173,6 +201,10 @@ const Admin = () => {
                                             <CloseOutlined onClick={handleImageRemove} style={{ cursor: 'pointer', color: 'red' }} />
                                         </div>
                                     )}
+                                </div>
+                                <div style={{display: 'flex', alignItems: 'center'}}>
+                                    <p style={{width: '100px'}}>Blog Title</p>
+                                    <Input placeholder="Title" onChange={TitleOnChange} />
                                 </div>
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px', height: '100%' }}>
@@ -242,7 +274,7 @@ const Admin = () => {
             <div style={{ padding: '1rem', background: darkMode ? '#333' : '#fff', position: 'sticky', bottom: 0, width: '100%' }}>
                 <Row>
                     <Col span={24}>
-                        <Button onClick={handleSubmit} style={{ width: '100%', background: darkMode ? '#555' : '#1890ff', color: darkMode ? '#fff' : '#fff' }}>Submit</Button>
+                        <Button onClick={handleSubmit} loading={loadingBtn} style={{ width: '100%', background: darkMode ? '#555' : '#1890ff', color: darkMode ? '#fff' : '#fff' }}>Submit</Button>
                     </Col>
                 </Row>
             </div>

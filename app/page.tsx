@@ -75,17 +75,24 @@ const Home = () => {
                                     <img
                                         alt={blog.title}
                                         src={blog.cover_image_url}
-                                        style={{ width: 300, height: 150, objectFit: 'cover' }} // Fixed image size
+                                        style={{ width: 300, height: 150, objectFit: 'cover' }} // 40% height for the image
                                     />
                                 }
                             >
                                 <Meta
-                                    title={blog.title}
-                                    description={
-                                        typeof blog.content === 'string'
-                                            ? `${blog.content.substring(0, 100)}...` // Shortened to fit space
-                                            : 'Content not available'
+                                    title={
+                                        <div style={{ fontSize: '24px', fontWeight: 'bold' }}> {/* Set title font size */}
+                                            {blog.title}
+                                        </div>
                                     }
+                                    description={
+                                        <div
+                                            style={{ color: '#000' }}
+                                            dangerouslySetInnerHTML={{
+                                                __html: `${blog.content.substring(0, 150)}...`, // Add ellipsis after 150 characters
+                                            }}
+                                        />
+                                    } // Render HTML content safely
                                 />
                             </Card>
                         </Col>
