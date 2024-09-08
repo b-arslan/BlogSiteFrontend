@@ -1,14 +1,14 @@
 'use client';
 import { useState, useEffect } from "react";
 import { Layout, Button, Row, Col, Card } from "antd";
-import { EditOutlined, UserOutlined } from "@ant-design/icons";
+import { EditOutlined, UserOutlined, InstagramOutlined, LinkedinOutlined, MailOutlined } from "@ant-design/icons";
 import styles from "./styles/page.module.scss";
 import axios from "axios"; // Assuming axios is used for API calls
 import { useRouter } from "next/navigation";
 import PSILogo from '../public/psi.png';
 import Image from "next/image";
 
-const { Header, Content } = Layout;
+const { Header, Content, Footer } = Layout;
 const { Meta } = Card;
 
 interface Blog {
@@ -111,6 +111,18 @@ const Home = () => {
                 </Row>
 
             </Content>
+
+            <Footer style={{background: '#fff', height: '8vh'}}>
+                <Row>
+                    <Col span={12} style={{display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '3rem', paddingBottom: '1rem'}}>
+                        <InstagramOutlined className={styles.instagram} onClick={() => window.open('https://www.instagram.com/psikolog.mehmetaker/')} />
+                        <LinkedinOutlined className={styles.linkedin} onClick={() => window.open('https://www.linkedin.com/in/pskmehmetaker/')}/>
+                    </Col>
+                    <Col span={12} style={{display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '3rem', paddingBottom: '1rem'}}>
+                        <p style={{fontSize: '20px', fontWeight: '600', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px'}}><MailOutlined className={styles.mailIcon}/>psikolog@mehmetaker.com</p>
+                    </Col>
+                </Row>
+            </Footer>
         </Layout>
     );
 };

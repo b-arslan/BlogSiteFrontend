@@ -1,14 +1,14 @@
 'use client';
 import { useState, useEffect } from "react";
 import { Layout, Row, Col, Button, Card, Divider } from "antd";
-import { EditOutlined, UserOutlined } from '@ant-design/icons';
+import { EditOutlined, InstagramOutlined, LinkedinOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense } from "react";
 import styles from '../styles/page.module.scss';
 import PSILogo from '../../public/psi.png';
 import Image from "next/image";
 
-const { Header, Content } = Layout;
+const { Header, Content, Footer } = Layout;
 
 interface Blog {
     video_url: any;
@@ -118,6 +118,18 @@ export default function Blogs() {
                         </Col>
                     </Row>
                 </Content>
+
+                <Footer style={{background: '#fff', height: '8vh'}}>
+                    <Row>
+                        <Col span={12} style={{display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '3rem', paddingBottom: '1rem'}}>
+                            <InstagramOutlined className={styles.instagram} onClick={() => window.open('https://www.instagram.com/psikolog.mehmetaker/')} />
+                            <LinkedinOutlined className={styles.linkedin} onClick={() => window.open('https://www.linkedin.com/in/pskmehmetaker/')}/>
+                        </Col>
+                        <Col span={12} style={{display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '3rem', paddingBottom: '1rem'}}>
+                            <p style={{fontSize: '20px', fontWeight: '600', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px'}}><MailOutlined className={styles.mailIcon}/>psikolog@mehmetaker.com</p>
+                        </Col>
+                    </Row>
+                </Footer>
             </Layout>
         </Suspense>
     );

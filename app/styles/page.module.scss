@@ -6,7 +6,7 @@
 
 .content {
     background: transparent;
-    min-height: 92vh;
+    min-height: 83vh;
     padding: 48px 12px;
     display: flex;
     flex-direction: column;
@@ -14,15 +14,18 @@
 }
 
 .layout {
-    background: linear-gradient(
-    180deg,
-    #fafafa, /* Yukarıda: Buz Beyazı */
-    #fafafa, /* Orta: Daha Açık Beyaz */
-    #fafafa  /* Aşağıda: Tam Beyaz */
-  ) !important;
+    background: linear-gradient(180deg,
+            #fafafa,
+            /* Yukarıda: Buz Beyazı */
+            #fafafa,
+            /* Orta: Daha Açık Beyaz */
+            #fafafa
+            /* Aşağıda: Tam Beyaz */
+        ) !important;
 }
 
-.headerCol1, .headerCol2{
+.headerCol1,
+.headerCol2 {
     display: flex;
     align-items: center;
 }
@@ -71,4 +74,10 @@
     align-items: center;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
     border-radius: 12px;
+}
+
+.instagram, .linkedin, .mailIcon {
+    font-size: 40px;
+    cursor: pointer;
+    color: #000;
 }
