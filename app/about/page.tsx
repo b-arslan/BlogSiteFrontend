@@ -30,9 +30,9 @@ const About = () => {
 
             <Content className={styles.content}>
                 <Row style={{ height: '100%' }}>
-                    <Col span={12} style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    {/* <Col span={12} style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <Image src={ProfileImg} alt='profile image' className={styles.myImg} />
-                    </Col>
+                    </Col> */}
 
                     <Col span={12} style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
                         <div className={styles.myImg} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative' }}>
