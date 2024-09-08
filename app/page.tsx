@@ -5,6 +5,8 @@ import { EditOutlined, UserOutlined } from "@ant-design/icons";
 import styles from "./styles/page.module.scss";
 import axios from "axios"; // Assuming axios is used for API calls
 import { useRouter } from "next/navigation";
+import PSILogo from '../public/psi.png';
+import Image from "next/image";
 
 const { Header, Content } = Layout;
 const { Meta } = Card;
@@ -45,7 +47,7 @@ const Home = () => {
             <Header style={{ background: "#ffffff", padding: "0px 24px", height: '8vh', textAlign: 'center' }}>
                 <Row style={{ height: '100%' }}>
                     <Col span={12} className={styles.headerCol1}>
-                        <h1 style={{ color: '#111827', cursor: 'pointer' }} onClick={() => router.push('/')}>Mehmet Aker</h1>
+                        <h1 style={{ color: '#111827', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick={() => router.push('/')}><Image style={{marginRight: '12px'}} width={40} src={PSILogo} alt='psi logo'/>Psikolog Mehmet Aker</h1>
                     </Col>
 
                     <Col span={12} className={styles.headerCol2}>
