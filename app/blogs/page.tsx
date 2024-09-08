@@ -18,7 +18,7 @@ interface Blog {
     content: string;
 }
 
-const Blogs = () => {
+export default function Blogs() {
     const [blogs, setBlogs] = useState<Blog[]>([]);
     const [selectedBlog, setSelectedBlog] = useState<Blog | null>(null);
     const router = useRouter();
@@ -121,5 +121,3 @@ const Blogs = () => {
         </Suspense>
     );
 };
-
-export default Blogs;
