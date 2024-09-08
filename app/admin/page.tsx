@@ -8,7 +8,7 @@ import TextAlign from "@tiptap/extension-text-align";
 import Link from "@tiptap/extension-link";
 import Heading from "@tiptap/extension-heading";
 import Image from "@tiptap/extension-image";
-import { Card, Tooltip, Menu, Dropdown, Button, Switch, Layout, Row, Col, Spin, Alert, Input } from "antd";
+import { Card, Tooltip, Menu, Dropdown, Button, Switch, Layout, Row, Col, Spin, Alert, Input, message } from "antd";
 import {
     BoldOutlined,
     ItalicOutlined,
@@ -22,7 +22,8 @@ import {
     PictureOutlined,
     HddOutlined,
     LoadingOutlined,
-    CloseOutlined
+    CloseOutlined,
+    VideoCameraOutlined
 } from '@ant-design/icons';
 import { EditorContent, useEditor } from "@tiptap/react";
 import styles from '../styles/admin.module.scss'; // Dark mode CSS'leri buraya ekleyeceğiz
@@ -33,9 +34,12 @@ const Admin = () => {
 
     const [darkMode, setDarkMode] = useState(false);
     const [uploadedImageName, setUploadedImageName] = useState<string | null>(null);
+    const [uploadedVideoName, setUploadedVideoName] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const fileInputRef2 = useRef<HTMLInputElement>(null);
+    const videoInputRef = useRef<HTMLInputElement>(null);
     const [isAuthorized, setIsAuthorized] = useState(false);
-    const [loadingBtn, setloadingBtn] = useState(false);
+    const [loadingBtn, setLoadingBtn] = useState(false);
     const [showSuccess, setShowSuccess] = useState(false);
     const [showError, setShowError] = useState(false);
     const [title, setTitle] = useState('');
@@ -44,20 +48,20 @@ const Admin = () => {
     useEffect(() => {
         const token = localStorage.getItem('token');
         const tokenExpiry = localStorage.getItem('tokenExpiry');
-    
+
         // If no token or token expiry is found, redirect to login page
         if (!token || !tokenExpiry) {
             router.push('/auth');
             return;
         }
-    
+
         // 2. Check if the token matches (for example, assuming 'sampleAuthToken')
         const isTokenValid = token === 'Authorized'; // Adjust this to your real logic
         if (!isTokenValid) {
             router.push('/auth');
             return;
         }
-    
+
         // 3. Check if token has expired
         const currentTime = new Date().getTime();
         if (currentTime > Number(tokenExpiry)) {
@@ -88,31 +92,59 @@ const Admin = () => {
             }),
             Image
         ],
-        content: '<p>Start typing...</p>'
+        content: '<p>Yazmaya başla...</p>'
     });
 
     if (!isAuthorized) {
         return (
             <Row>
-                <Col span={24} style={{display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh'}}>
+                <Col span={24} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
                     <Spin indicator={<LoadingOutlined spin style={{ fontSize: '64px', color: '#000', marginTop: '2rem' }} />} />
                 </Col>
             </Row>
         );
     }
+
+    const handleCoverImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file) {
+            setUploadedImageName(file.name); // Just store the image locally
+        }
+    };
+    
+
     //const fileInputRef = useRef<HTMLInputElement>(null);
     const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
-
-        if (file) {
-            // Fotoğraf adı ayarlanır
-            setUploadedImageName(file.name);
-            // Supabase veya başka bir servise yükleme işlemi yapılabilir
-            const imageUrl = 'https://supabaseimage.example.com';
-            // Editor'e resim ekleme işlemi kaldırıldı
-            // Yalnızca state'de tutulur, editöre eklenmez
+        if (!file) {
+            message.error("No file selected.");
+            return;
+        }
+    
+        const formData = new FormData();
+        formData.append("image", file);
+    
+        try {
+            const response = await axios.post('https://blog-site-backend-ebon.vercel.app/api/upload-image', formData, {
+                headers: { 'Content-Type': 'multipart/form-data' },
+            });
+    
+            const imageUrl = response.data.url;
+    
+            // Insert image URL into the editor
+            editor?.chain().focus().setImage({ src: imageUrl }).run();
+            message.success("Image uploaded and inserted into content!");
+    
+        } catch (error) {
+            console.error("Image upload error:", error);
+            message.error("Image upload failed.");
         }
     };
+
+    // const handleVideoUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    //     const file = event.target.files?.[0];
+    //     if (file) setUploadedVideoName(file.name);
+    // };
 
     const handleImageRemove = () => {
         // Yüklenen fotoğraf temizlenir
@@ -130,36 +162,37 @@ const Admin = () => {
     }
 
     const handleSubmit = async () => {
-        setloadingBtn(true);
-        const content = editor?.getHTML(); // Get the HTML content from the editor
+        setLoadingBtn(true);
+        const content = editor?.getHTML();
         const formData = new FormData();
     
-        formData.append('title', title || ''); // Replace with your blog title
-        formData.append('author', 'Mehmet Aker'); // Replace with the author name
-        formData.append('content', content || ''); // Editor content in HTML
+        formData.append('title', title || '');
+        formData.append('author', 'Mehmet Aker');
+        formData.append('content', content || '');
+    
+        // Add the cover image to the blog post API request
         if (fileInputRef.current?.files?.[0]) {
-            formData.append('coverImage', fileInputRef.current.files[0]); // Append the uploaded image
+            formData.append('coverImage', fileInputRef.current.files[0]); // Now it's only sent with the blog post
         }
     
         try {
             const res = await axios.post('https://blog-site-backend-ebon.vercel.app/api/blog', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
-            console.log('Blog posted successfully:', res.data);
             setShowSuccess(true);
             setTimeout(() => setShowSuccess(false), 5000);
-            setTitle(''); // Clear the title input
-            setUploadedImageName(null); // Remove uploaded image
+            setTitle('');
+            setUploadedImageName(null);
             editor?.commands.clearContent();
-            setloadingBtn(false);
-
+            setLoadingBtn(false);
         } catch (error) {
             console.error('Error posting blog:', error);
             setShowError(true);
             setTimeout(() => setShowError(false), 5000);
-            setloadingBtn(false);
+            setLoadingBtn(false);
         }
-    };    
+    };
+    
 
     return (
 
@@ -167,20 +200,20 @@ const Admin = () => {
             <Content className={darkMode ? styles.darkMode : ''} style={{ flexGrow: 1 }}>
                 <Row>
                     <Col span={24}>
-                        <Card title={<span style={{ color: darkMode ? '#fff' : '#000' }}>Blog Editor</span>} style={{ width: '100%', display: 'flex', flexDirection: 'column' }} className={darkMode ? styles.darkMode : ''}>
+                        <Card title={<span style={{ color: darkMode ? '#fff' : '#000' }}>Blog Editör</span>} style={{ width: '100%', display: 'flex', flexDirection: 'column' }} className={darkMode ? styles.darkMode : ''}>
                             <div style={{ marginBottom: '1rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
-                                
+
                                 {showSuccess && (
-                                    <Alert message="Upload Successful" type="success" style={{ position: 'fixed', top: '0', right: '0', width: '350px' }} />
+                                    <Alert message="İşlem Başarılı!" type="success" style={{ position: 'fixed', top: '0', right: '0', width: '350px' }} />
                                 )}
                                 {showError && (
-                                    <Alert message="Upload Failed" type="error" style={{ position: 'fixed', top: '0', right: '0', width: '350px' }} />
+                                    <Alert message="İşlem Başarısız!" type="error" style={{ position: 'fixed', top: '0', right: '0', width: '350px' }} />
                                 )}
 
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                                     <Button
                                         icon={<PictureOutlined />}
-                                        onClick={() => fileInputRef.current?.click()}
+                                        onClick={() => fileInputRef2.current?.click()}
                                         style={{ fontSize: '16px' }}
                                         disabled={!!uploadedImageName} // Yüklenmiş bir kapak fotoğrafı varsa buton devre dışı bırakılır
                                     >
@@ -189,9 +222,9 @@ const Admin = () => {
                                     <input
                                         type="file"
                                         accept="image/*"
-                                        ref={fileInputRef}
+                                        ref={fileInputRef2}
                                         style={{ display: 'none' }}
-                                        onChange={handleImageUpload}
+                                        onChange={handleCoverImageUpload}
                                     />
 
                                     {/* Resim yüklendiyse adı ve silme ikonu gösterilir */}
@@ -201,10 +234,16 @@ const Admin = () => {
                                             <CloseOutlined onClick={handleImageRemove} style={{ cursor: 'pointer', color: 'red' }} />
                                         </div>
                                     )}
+
+                                    {/* <Button icon={<VideoCameraOutlined />} onClick={() => videoInputRef.current?.click()} disabled={!!uploadedVideoName}>
+                                        Video Ekle
+                                    </Button>
+                                    <input type="file" accept="video/*" ref={videoInputRef} style={{ display: 'none' }} onChange={handleVideoUpload} />
+                                    {uploadedVideoName && <span>{uploadedVideoName} <CloseOutlined onClick={() => setUploadedVideoName(null)} /></span>} */}
                                 </div>
-                                <div style={{display: 'flex', alignItems: 'center'}}>
-                                    <p style={{width: '100px'}}>Blog Title</p>
-                                    <Input placeholder="Title" onChange={TitleOnChange} />
+                                <div style={{ display: 'flex', alignItems: 'center' }}>
+                                    <p style={{ width: '140px', marginRight: '2px' }}>Blog Başlığı</p>
+                                    <Input placeholder="Başlık" onChange={TitleOnChange} />
                                 </div>
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px', height: '100%' }}>
@@ -259,8 +298,8 @@ const Admin = () => {
                                     />
                                 </div>
                                 <Switch
-                                    checkedChildren="Dark"
-                                    unCheckedChildren="Light"
+                                    checkedChildren="Koyu"
+                                    unCheckedChildren="Açık"
                                     onChange={toggleDarkMode}
                                     checked={darkMode}
                                     style={{ marginLeft: 'auto' }}
@@ -274,7 +313,7 @@ const Admin = () => {
             <div style={{ padding: '1rem', background: darkMode ? '#333' : '#fff', position: 'sticky', bottom: 0, width: '100%' }}>
                 <Row>
                     <Col span={24}>
-                        <Button onClick={handleSubmit} loading={loadingBtn} style={{ width: '100%', background: darkMode ? '#555' : '#1890ff', color: darkMode ? '#fff' : '#fff' }}>Submit</Button>
+                        <Button onClick={handleSubmit} loading={loadingBtn} style={{ width: '100%', background: darkMode ? '#555' : '#1890ff', color: darkMode ? '#fff' : '#fff' }}>Kaydet</Button>
                     </Col>
                 </Row>
             </div>

@@ -78,12 +78,12 @@ const Home = () => {
                             <Card
                                 hoverable
                                 className='card-container'
-                                style={{ width: 300, height: 350 }} // Fixed card size
+                                style={{ width: 300, height: 475 }} // Fixed card size
                                 cover={
                                     <img
                                         alt={blog.title}
                                         src={blog.cover_image_url}
-                                        style={{ width: 300, height: 150, objectFit: 'cover' }} // 40% height for the image
+                                        style={{ width: 300, height: 180, objectFit: 'cover' }} // 40% height for the image
                                     />
                                 }
                                 onClick={() => router.push(`/blogs?id=${blog.id}`)}

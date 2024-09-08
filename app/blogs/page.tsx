@@ -8,6 +8,7 @@ import styles from '../styles/page.module.scss';
 const { Header, Content } = Layout;
 
 interface Blog {
+    video_url: any;
     cover_image_url: string | undefined;
     id: number;
     title: string;
@@ -25,6 +26,7 @@ const Blogs = () => {
 
     useEffect(() => {
         const blogData: Blog[] = JSON.parse(localStorage.getItem('blogData') || '[]');
+        blogData.reverse(); // reverse the data
         setBlogs(blogData);
 
         if (blogId) {
@@ -78,15 +80,22 @@ const Blogs = () => {
                         ))}
                     </Col>
 
-                    <Col span={20} style={{ padding: '2rem 0rem', height: '100%', overflowY: 'auto', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', boxShadow: 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;', borderRadius: '12px' }}>
+                    <Col span={20} className={styles.colBlog}>
                         {selectedBlog ? (
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: '70%', justifyContent: 'center', alignItems: 'center' }}>
                                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '1rem' }}>
-                                    <img
-                                        src={selectedBlog.cover_image_url}
-                                        alt={selectedBlog.title}
-                                        style={{ width: '400px', maxHeight: '400px', objectFit: 'cover', marginBottom: '1rem' }}
-                                    />
+                                    {selectedBlog.video_url ? (
+                                        <video width="400" controls>
+                                            <source src={selectedBlog.video_url} type="video/mp4" />
+                                            Tarayıcınız bu videoyu oynatamıyor.
+                                        </video>
+                                    ) : (
+                                        <img
+                                            src={selectedBlog.cover_image_url}
+                                            alt={selectedBlog.title}
+                                            style={{ width: '400px', maxHeight: '400px', objectFit: 'cover', marginBottom: '1rem', borderRadius: '12px' }}
+                                        />
+                                    )}
                                     <h1>{selectedBlog.title}</h1>
                                     <p style={{ fontSize: '1rem', color: '#888' }}>
                                         {new Date(selectedBlog.created_at).toLocaleDateString('tr-TR', {
@@ -100,7 +109,7 @@ const Blogs = () => {
                             </div>
                         ) : (
                             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <h1>No blog selected</h1>
+                                <h1>Herhangi Bir Blog Seçilmedi...</h1>
                             </div>
                         )}
                     </Col>
