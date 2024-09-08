@@ -6,7 +6,7 @@
 
 .content {
     background: transparent;
-    min-height: 83vh;
+    min-height: 80vh;
     padding: 48px 12px;
     display: flex;
     flex-direction: column;
@@ -78,6 +78,15 @@
 
 .instagram, .linkedin, .mailIcon {
     font-size: 40px;
-    cursor: pointer;
     color: #000;
+}
+
+.instagram, .linkedin {
+    cursor: pointer;
+}
+
+.footer {
+    background: #fff;
+    height: auto;
+    padding: 24px 24px;
 }

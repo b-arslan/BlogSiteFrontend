@@ -7,6 +7,8 @@ import axios from "axios"; // Assuming axios is used for API calls
 import { useRouter } from "next/navigation";
 import PSILogo from '../public/psi.png';
 import Image from "next/image";
+import FooterComponent from "./components/FooterComponent";
+import HeaderComponent from "./components/HeaderComponent";
 
 const { Header, Content, Footer } = Layout;
 const { Meta } = Card;
@@ -44,17 +46,8 @@ const Home = () => {
 
     return (
         <Layout className={styles.layout}>
-            <Header style={{ background: "#ffffff", padding: "0px 24px", height: '8vh', textAlign: 'center' }}>
-                <Row style={{ height: '100%' }}>
-                    <Col span={12} className={styles.headerCol1}>
-                        <h1 style={{ color: '#111827', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick={() => router.push('/')}><Image style={{marginRight: '12px'}} width={40} src={PSILogo} alt='psi logo'/>Psikolog Mehmet Aker</h1>
-                    </Col>
-
-                    <Col span={12} className={styles.headerCol2}>
-                        <Button href="/blogs" type='text' className={styles.btn}><EditOutlined /> Blog</Button>
-                        <Button href="/about" type='text' className={styles.btn}><UserOutlined /> Hakkımda</Button>
-                    </Col>
-                </Row>
+            <Header style={{ background: "#ffffff", padding: "0px 24px", height: '10vh', textAlign: 'center' }}>
+                <HeaderComponent />
             </Header>
 
             <Content className={styles.content}>
@@ -112,17 +105,7 @@ const Home = () => {
 
             </Content>
 
-            <Footer style={{background: '#fff', height: '8vh'}}>
-                <Row>
-                    <Col span={12} style={{display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '3rem', paddingBottom: '1rem'}}>
-                        <InstagramOutlined className={styles.instagram} onClick={() => window.open('https://www.instagram.com/psikolog.mehmetaker/')} />
-                        <LinkedinOutlined className={styles.linkedin} onClick={() => window.open('https://www.linkedin.com/in/pskmehmetaker/')}/>
-                    </Col>
-                    <Col span={12} style={{display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '3rem', paddingBottom: '1rem'}}>
-                        <p style={{fontSize: '20px', fontWeight: '600', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px'}}><MailOutlined className={styles.mailIcon}/>psikolog@mehmetaker.com</p>
-                    </Col>
-                </Row>
-            </Footer>
+            <FooterComponent />
         </Layout>
     );
 };

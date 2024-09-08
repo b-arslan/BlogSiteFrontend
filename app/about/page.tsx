@@ -4,9 +4,10 @@ import { Layout, Row, Col, Button } from 'antd';
 import styles from '../styles/page.module.scss';
 import { EditOutlined, InstagramOutlined, LinkedinOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
 import Image from 'next/image';
-import ProfileImg from '../../public/profile.png';
 import { useRouter } from 'next/navigation';
 import PSILogo from '../../public/psi.png';
+import HeaderComponent from '../components/HeaderComponent';
+import FooterComponent from '../components/FooterComponent';
 
 const { Header, Content, Footer } = Layout;
 
@@ -16,28 +17,15 @@ const About = () => {
 
     return (
         <Layout className={styles.layout}>
-            <Header style={{ background: "#ffffff", padding: "0px 24px", height: '8vh', textAlign: 'center' }}>
-                <Row style={{ height: '100%' }}>
-                    <Col span={12} className={styles.headerCol1}>
-                    <h1 style={{ color: '#111827', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick={() => router.push('/')}><Image style={{marginRight: '12px'}} width={40} src={PSILogo} alt='psi logo'/>Psikolog Mehmet Aker</h1>                    </Col>
-
-                    <Col span={12} className={styles.headerCol2}>
-                        <Button href="/blogs" type='text' className={styles.btn}><EditOutlined /> Blog</Button>
-                        <Button href="/about" type='text' className={styles.btn}><UserOutlined /> Hakkımda</Button>
-                    </Col>
-                </Row>
+            <Header style={{ background: "#ffffff", padding: "0px 24px", height: '10vh', textAlign: 'center' }}>
+                <HeaderComponent />
             </Header>
 
             <Content className={styles.content}>
-                <Row style={{ height: '100%' }}>
-                    {/* <Col span={12} style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <Image src={ProfileImg} alt='profile image' className={styles.myImg} />
-                    </Col> */}
-
-
+                {/* <Row style={{ height: '100%' }}>
                     <Col span={12} style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
                         <div className={styles.myImg} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative' }}>
-                            <h1 style={{ alignSelf: 'center', marginTop: '24px' }}>The Best Psikolog Ever</h1> {/* Aligned to the top of the div */}
+                            <h1 style={{ alignSelf: 'center', marginTop: '24px' }}>The Best Psikolog Ever</h1> {/* Aligned to the top of the div
                             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', flexGrow: 1, padding: '0px 24px', textAlign: 'justify', marginTop: '-24px' }}>
                                 <p>Test Detay</p>
                                 <p>Psikolojik master</p>
@@ -46,39 +34,22 @@ const About = () => {
                             </div>
                         </div>
                     </Col>
-                </Row>
+                </Row> */}
 
                 <Row style={{ height: '100%' }}>
                     <Col span={24} style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
                         <div className={styles.myDiv} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative' }}>
-                            <h1 style={{ alignSelf: 'center', marginTop: '24px' }}>Mehmet Aker Psikoloji</h1> {/* Aligned to the top of the div */}
+                            <h1 style={{ alignSelf: 'center', marginTop: '24px' }}>Hakkımda</h1> {/* Aligned to the top of the div */}
                             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', flexGrow: 1, padding: '0px 24px', textAlign: 'justify', marginTop: '-24px' }}>
-                                <p>Test Detay</p>
-                                <p>Psikolojik master</p>
-                                <p>En sevdiği yemek</p>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga quasi alias molestias officia modi reiciendis officiis eveniet ducimus, dolores iusto. Sunt delectus tenetur, suscipit fugit labore corrupti laboriosam. Sunt, quia?</p>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga quasi alias molestias officia modi reiciendis officiis eveniet ducimus, dolores iusto. Sunt delectus tenetur, suscipit fugit labore corrupti laboriosam. Sunt, quia?</p>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga quasi alias molestias officia modi reiciendis officiis eveniet ducimus, dolores iusto. Sunt delectus tenetur, suscipit fugit labore corrupti laboriosam. Sunt, quia?</p>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga quasi alias molestias officia modi reiciendis officiis eveniet ducimus, dolores iusto. Sunt delectus tenetur, suscipit fugit labore corrupti laboriosam. Sunt, quia?</p>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga quasi alias molestias officia modi reiciendis officiis eveniet ducimus, dolores iusto. Sunt delectus tenetur, suscipit fugit labore corrupti laboriosam. Sunt, quia?</p>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga quasi alias molestias officia modi reiciendis officiis eveniet ducimus, dolores iusto. Sunt delectus tenetur, suscipit fugit labore corrupti laboriosam. Sunt, quia?</p>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga quasi alias molestias officia modi reiciendis officiis eveniet ducimus, dolores iusto. Sunt delectus tenetur, suscipit fugit labore corrupti laboriosam. Sunt, quia?</p>
+                                <p>Yakında...</p>
                             </div>
                         </div>
                     </Col>
                 </Row>
             </Content>
 
-            <Footer style={{background: '#fff', height: '8vh'}}>
-                <Row>
-                    <Col span={12} style={{display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '3rem', paddingBottom: '1rem'}}>
-                        <InstagramOutlined className={styles.instagram} onClick={() => window.open('https://www.instagram.com/psikolog.mehmetaker/')} />
-                        <LinkedinOutlined className={styles.linkedin} onClick={() => window.open('https://www.linkedin.com/in/pskmehmetaker/')}/>
-                    </Col>
-                    <Col span={12} style={{display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '3rem', paddingBottom: '1rem'}}>
-                        <p style={{fontSize: '20px', fontWeight: '600', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px'}}><MailOutlined className={styles.mailIcon}/>psikolog@mehmetaker.com</p>
-                    </Col>
-                </Row>
+            <Footer className={styles.footer} >
+                <FooterComponent />
             </Footer>
         </Layout>
     )
