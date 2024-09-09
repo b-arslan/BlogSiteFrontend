@@ -10,37 +10,53 @@ const HeaderComponent = () => {
     const router = useRouter();
 
     return (
-        <Row style={{ height: "100%" }}>
-            <Col span={12} className={styles.headerCol1}>
+        <div className={styles.headerRow}>
+            <div className={styles.headerCol1}>
                 <h1
-                    style={{
-                        color: "#111827",
-                        cursor: "pointer",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                    }}
+                    className={styles.titleHeader}
                     onClick={() => router.push("/")}
                 >
                     <Image
-                        style={{ marginRight: "12px" }}
-                        width={40}
+                        className={styles.logoHeader}
                         src={PSILogo}
                         alt="psi logo"
                     />
                     Psikolog Mehmet Aker
                 </h1>
-            </Col>
-
-            <Col span={12} className={styles.headerCol2}>
+            </div>
+            <div className={styles.headerCol2}>
                 <Button href="/blogs" type="text" className={styles.btn}>
                     <EditOutlined /> Blog
                 </Button>
                 <Button href="/about" type="text" className={styles.btn}>
                     <UserOutlined /> Hakkımda
                 </Button>
-            </Col>
-        </Row>
+            </div>
+        </div >
+        // <Row style={{ height: "100%" }} className={styles.headerRow}>
+        //     <Col span={12} className={styles.headerCol1}>
+        //         <h1
+        //             className={styles.titleHeader}
+        //             onClick={() => router.push("/")}
+        //         >
+        //             <Image
+        //                 className={styles.logoHeader}
+        //                 src={PSILogo}
+        //                 alt="psi logo"
+        //             />
+        //             Psikolog Mehmet Aker
+        //         </h1>
+        //     </Col>
+
+        //     <Col  span={12} className={styles.headerCol2} >
+        //         <Button href="/blogs" type="text" className={styles.btn}>
+        //             <EditOutlined /> Blog
+        //         </Button>
+        //         <Button href="/about" type="text" className={styles.btn}>
+        //             <UserOutlined /> Hakkımda
+        //         </Button>
+        //     </Col>
+        // </Row>
     );
 };
 

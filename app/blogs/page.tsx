@@ -63,7 +63,7 @@ export default function Blogs() {
     return (
         <Suspense fallback={<div>Loading...</div>}>
             <Layout className={styles.layout}>
-                <Header style={{ background: "#ffffff", padding: "0px 24px", height: '10vh', textAlign: 'center' }}>
+                <Header className={styles.header} style={{ background: "#ffffff", padding: "0px 24px", textAlign: 'center' }}>
                     <HeaderComponent />
                 </Header>
 

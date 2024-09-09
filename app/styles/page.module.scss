@@ -1,6 +1,9 @@
 .header {
-    background: transparent !important;
-    padding: 0px 24px;
+    height: 10vh;
+
+    @media (max-width: 468px) {
+        height: 15vh;
+    }
     // box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
 }
 
@@ -37,6 +40,10 @@
 .headerCol2 {
     justify-content: flex-end;
     gap: 1.5rem;
+
+    @media (max-width: 468px) {
+        padding-bottom: 12px;
+    }
 }
 
 // .btn:hover {
@@ -48,6 +55,14 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
+
+    @media (max-width: 768px) {
+        font-size: 14px;
+    }
+
+    @media (max-width: 468px) {
+        font-size: 14px;
+    }
 }
 
 .myImg {
@@ -76,12 +91,15 @@
     border-radius: 12px;
 }
 
-.instagram, .linkedin, .mailIcon {
+.instagram,
+.linkedin,
+.mailIcon {
     font-size: 40px;
     color: #000;
 }
 
-.instagram, .linkedin {
+.instagram,
+.linkedin {
     cursor: pointer;
 }
 
@@ -89,4 +107,49 @@
     background: #fff;
     height: auto;
     padding: 24px 24px;
+}
+
+.titleHeader {
+    color: #111827;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @media (max-width: 768px) {
+        font-size: 20px;
+    }
+    
+    @media (max-width: 768px) {
+        font-size: 20px;
+    }
+    
+
+}
+
+.logoHeader {
+    margin-right: 12px;
+    width: 40px;
+    height: 40px;
+
+    @media (max-width: 768px) {
+        width: 20px;
+        height: 20px;
+    }
+    @media (max-width: 468px) {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+.headerRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+
+    @media (max-width: 468px) {
+        flex-direction: column;
+        padding: 0;
+    }
 }
