@@ -27,7 +27,7 @@ const FooterComponent = () => {
                     }}
                 >
                     <div style={{ position: "absolute", top: "0" }}>
-                        <h2>Sosyal</h2>
+                        <h2 className={styles.footerTitle}>Sosyal</h2>
                     </div>
 
                     <div

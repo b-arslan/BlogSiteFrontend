@@ -96,6 +96,12 @@
 .mailIcon {
     font-size: 40px;
     color: #000;
+    @media (max-width: 768px) {
+        font-size: 32px;
+    }
+    @media (max-width: 468px) {
+        font-size: 24px;
+    }
 }
 
 .instagram,
@@ -151,5 +157,11 @@
     @media (max-width: 468px) {
         flex-direction: column;
         padding: 0;
+    }
+}
+
+.footerTitle {
+    @media (max-width: 768px) {
+        font-size: 20px;
     }
 }
