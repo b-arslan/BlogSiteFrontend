@@ -1,14 +1,11 @@
 'use client';
 import { useState, useEffect } from "react";
-import { Layout, Row, Col, Button, Card, Divider } from "antd";
-import { EditOutlined, InstagramOutlined, LinkedinOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
+import { Layout, Row, Col, Card } from "antd";
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense } from "react";
 import styles from '../styles/page.module.scss';
-import PSILogo from '../../public/psi.png';
-import Image from "next/image";
 
-const { Header, Content, Footer } = Layout;
+const { Content } = Layout;
 
 interface Blog {
     video_url: any;
@@ -42,24 +39,28 @@ export default function Blogs() {
         setSelectedBlog(blog);
     };
 
+    let blogText;
+    let displayMenu;
+    let colSpan;
+    let colStyle;
+    if (blogs == undefined || blogs == null || blogs.length == 0) {
+        blogText = 'Blog Bulunamadı';
+        displayMenu = 'none';
+        colSpan = 24;
+        colStyle = undefined;
+    } else {
+        blogText = 'Henüz Blog Seçilmedi'
+        displayMenu = 'block';
+        colSpan = 20;
+        colStyle = styles.colBlog;
+    }
+
     return (
         <Suspense fallback={<div>Loading...</div>}>
             <Layout className={styles.layout}>
-                <Header style={{ background: "#ffffff", padding: "0px 24px", height: '8vh', textAlign: 'center' }}>
-                    <Row style={{ height: '100%' }}>
-                        <Col span={12} className={styles.headerCol1}>
-                            <h1 style={{ color: '#111827', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick={() => router.push('/')}><Image style={{marginRight: '12px'}} width={40} src={PSILogo} alt='psi logo'/>Psikolog Mehmet Aker</h1>                        </Col>
-
-                        <Col span={12} className={styles.headerCol2}>
-                            <Button href="/blogs" type='text' className={styles.btn}><EditOutlined /> Blog</Button>
-                            <Button href="/about" type='text' className={styles.btn}><UserOutlined /> Hakkımda</Button>
-                        </Col>
-                    </Row>
-                </Header>
-
                 <Content className={styles.content}>
                     <Row style={{ height: '100%' }}>
-                        <Col span={4} style={{ padding: '0rem 1rem', overflowY: 'auto' }}>
+                        <Col span={4} style={{ padding: '0rem 1rem', overflowY: 'auto', display: `${displayMenu}` }}>
                             {blogs.map((blog) => (
                                 <Card
                                     key={blog.id}
@@ -83,7 +84,7 @@ export default function Blogs() {
                             ))}
                         </Col>
 
-                        <Col span={20} className={styles.colBlog}>
+                        <Col span={colSpan} className={colStyle}>
                             {selectedBlog ? (
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: '70%', justifyContent: 'center', alignItems: 'center' }}>
                                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '1rem' }}>
@@ -112,24 +113,12 @@ export default function Blogs() {
                                 </div>
                             ) : (
                                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                    <h1>Herhangi Bir Blog Seçilmedi...</h1>
+                                    <h1>{blogText}</h1>
                                 </div>
                             )}
                         </Col>
                     </Row>
                 </Content>
-
-                <Footer style={{background: '#fff', height: '8vh'}}>
-                    <Row>
-                        <Col span={12} style={{display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '3rem', paddingBottom: '1rem'}}>
-                            <InstagramOutlined className={styles.instagram} onClick={() => window.open('https://www.instagram.com/psikolog.mehmetaker/')} />
-                            <LinkedinOutlined className={styles.linkedin} onClick={() => window.open('https://www.linkedin.com/in/pskmehmetaker/')}/>
-                        </Col>
-                        <Col span={12} style={{display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '3rem', paddingBottom: '1rem'}}>
-                            <p style={{fontSize: '20px', fontWeight: '600', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px'}}><MailOutlined className={styles.mailIcon}/>psikolog@mehmetaker.com</p>
-                        </Col>
-                    </Row>
-                </Footer>
             </Layout>
         </Suspense>
     );

@@ -2,12 +2,16 @@ import type { Metadata } from "next";
 import "./styles/globals.scss";
 import { Inter } from "next/font/google";
 import { Analytics } from '@vercel/analytics/react';
+import HeaderComponent from "./components/HeaderComponent";
+import FooterComponent from "./components/FooterComponent";
+import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Psikolog Mehmet Aker",
-  description: "Psikolog Mehmet Aker's Blog Website. Learn anything about psychology.",
+  description: "Psikolog Mehmet Aker'in uzmanlık alanları ile ilgili bilgilendirici içerikler, terapi yöntemleri, ruh sağlığı ve mental gelişim üzerine blog yazıları.",
+  keywords: "Psikolog, Mehmet Aker, uzman psikolog, terapi, ruh sağlığı, mental gelişim, danışmanlık, psikoloji blog, psikoloji, aker",
 };
 
 export default function RootLayout({
@@ -16,9 +20,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="tr">
+      <Head>
+        <link rel="preload" as="style" href="/styles/gloabls.scss"/>
+      </Head>
       <body className={inter.className}>
-        {children}
+        <HeaderComponent />
+        <main>{children}</main>
+        <FooterComponent />
         <Analytics />
       </body>
     </html>
