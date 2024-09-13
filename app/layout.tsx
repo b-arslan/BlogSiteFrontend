@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Psikolog Mehmet Aker",
-  description: "Psikolog Mehmet Aker'in uzmanlık alanları ile ilgili bilgilendirici içerikler, terapi yöntemleri, ruh sağlığı ve mental gelişim üzerine blog yazıları.",
+  description: "Psikolog Mehmet Aker'in uzmanlık alanları ile ilgili bilgilendirici içerikler, bilişsel davranışçı terapi, terapi yöntemleri, ruh sağlığı ve mental gelişim üzerine blog yazıları.",
   keywords: "Psikolog, Mehmet Aker, uzman psikolog, terapi, ruh sağlığı, mental gelişim, danışmanlık, psikoloji blog, psikoloji, aker",
 };
 
