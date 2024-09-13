@@ -7,7 +7,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Psikolog Mehmet Aker",
-  description: "Psikolog Mehmet Aker's Blog Website. Learn anything about psychology.",
+  description: "Psikolog Mehmet Aker'in uzmanlık alanları ile ilgili bilgilendirici içerikler, terapi yöntemleri, ruh sağlığı ve mental gelişim üzerine blog yazıları.",
+  keywords: "Psikolog, Mehmet Aker, uzman psikolog, terapi, ruh sağlığı, mental gelişim, danışmanlık, psikoloji blog, psikoloji, aker",
 };
 
 export default function RootLayout({
@@ -16,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="tr">
       <body className={inter.className}>
         {children}
         <Analytics />

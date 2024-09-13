@@ -1,16 +1,13 @@
 'use client';
 import { useState, useEffect } from "react";
-import { Layout, Button, Row, Col, Card } from "antd";
-import { EditOutlined, UserOutlined, InstagramOutlined, LinkedinOutlined, MailOutlined } from "@ant-design/icons";
+import { Layout, Row, Col, Card } from "antd";
 import styles from "./styles/page.module.scss";
-import axios from "axios"; // Assuming axios is used for API calls
+import axios from "axios";
 import { useRouter } from "next/navigation";
-import PSILogo from '../public/psi.png';
-import Image from "next/image";
 import FooterComponent from "./components/FooterComponent";
 import HeaderComponent from "./components/HeaderComponent";
 
-const { Header, Content, Footer } = Layout;
+const { Header, Content } = Layout;
 const { Meta } = Card;
 
 interface Blog {
@@ -18,7 +15,7 @@ interface Blog {
     title: string;
     content: string;
     created_by: string;
-    cover_image_url: string; // Assuming this is the field for the image URL
+    cover_image_url: string;
 }
 
 const Home = () => {
@@ -28,8 +25,8 @@ const Home = () => {
     useEffect(() => {
         const getBlogs = async () => {
             try {
-                const response = await axios.get('https://blog-site-backend-ebon.vercel.app/api/blogposts'); // Call your GET API here
-                setBlogs(response.data.content); // Assuming API returns 'content' field with blogs array
+                const response = await axios.get('https://blog-site-backend-ebon.vercel.app/api/blogposts');
+                setBlogs(response.data.content);
                 localStorage.setItem('blogData', JSON.stringify(response.data.content));
             } catch (error) {
                 console.error('Error fetching blogs:', error);
@@ -38,11 +35,6 @@ const Home = () => {
 
         getBlogs();
     }, []);
-
-    const handleBlogClick = (blog: Blog) => {
-        localStorage.setItem('selectedBlogId', blog.id.toString()); // Store selected blog ID in localStorage
-        router.push('/blogs'); // Navigate to the blogs page
-    };
 
     return (
         <Layout className={styles.layout}>
@@ -53,7 +45,7 @@ const Home = () => {
             <Content className={styles.content}>
                 <Row style={{ background: "transparent", padding: "24px 0px" }}>
                     <Col span={24} style={{ textAlign: "center" }}>
-                        <h1>Giriş Metni Başlık</h1>
+                        <h2>Giriş Metni Başlık</h2>
                     </Col>
 
                     <Col span={24} style={{ textAlign: "center" }}>
@@ -73,19 +65,19 @@ const Home = () => {
                             <Card
                                 hoverable
                                 className='card-container'
-                                style={{ width: 300, height: 475 }} // Fixed card size
+                                style={{ width: 300, height: 475 }}
                                 cover={
                                     <img
                                         alt={blog.title}
                                         src={blog.cover_image_url}
-                                        style={{ width: 300, height: 180, objectFit: 'cover' }} // 40% height for the image
+                                        style={{ width: 300, height: 180, objectFit: 'cover' }}
                                     />
                                 }
                                 onClick={() => router.push(`/blogs?id=${blog.id}`)}
                             >
                                 <Meta
                                     title={
-                                        <div style={{ fontSize: '24px', fontWeight: 'bold' }}> {/* Set title font size */}
+                                        <div style={{ fontSize: '24px', fontWeight: 'bold' }}>
                                             {blog.title}
                                         </div>
                                     }
@@ -93,10 +85,10 @@ const Home = () => {
                                         <div
                                             style={{ color: '#000' }}
                                             dangerouslySetInnerHTML={{
-                                                __html: `${blog.content.substring(0, 150)}...`, // Add ellipsis after 150 characters
+                                                __html: `${blog.content.substring(0, 150)}...`,
                                             }}
                                         />
-                                    } // Render HTML content safely
+                                    } 
                                 />
                             </Card>
                         </Col>
