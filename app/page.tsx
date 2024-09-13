@@ -38,10 +38,6 @@ const Home = () => {
 
     return (
         <Layout className={styles.layout}>
-            <Header className={styles.header} style={{ background: "#ffffff", padding: "0px 24px", textAlign: 'center' }}>
-                <HeaderComponent />
-            </Header>
-
             <Content className={styles.content}>
                 <Row style={{ background: "transparent", padding: "24px 0px" }}>
                     <Col span={24} style={{ textAlign: "center" }}>
@@ -96,8 +92,6 @@ const Home = () => {
                 </Row>
 
             </Content>
-
-            <FooterComponent />
         </Layout>
     );
 };

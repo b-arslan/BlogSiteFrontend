@@ -37,64 +37,14 @@ const FooterComponent = () => {
                             justifyContent: "center",
                             flexDirection: "column",
                             width: "100%",
-                            gap: '1rem',
+                            gap: '0.2rem',
                             marginTop: '4rem'
                         }}
                     >
-                        <p
-                            style={{
-                                fontSize: "20px",
-                                fontWeight: "600",
-                                display: "flex",
-                                alignItems: "center",
-                                gap: "16px",
-                            }}
-                        >
-                            <InstagramOutlined
-                                className={styles.instagram}
-                                onClick={() =>
-                                    window.open(
-                                        "https://www.instagram.com/psikolog.mehmetaker/"
-                                    )
-                                }
-                            />
-                            <span style={{ marginLeft: "auto" }}>
-                                Instagram
-                            </span>
-                        </p>
+                        <Button type="text" className={styles.instagram} onClick={() => window.open("https://www.instagram.com/psikolog.mehmetaker/")}><InstagramOutlined /> Instagram</Button>
+                        <Button type="text" className={styles.linkedin} onClick={() => window.open("https://www.linkedin.com/in/pskmehmetaker/")}><LinkedinOutlined /> LinkedIn</Button>
+                        <Button type="text" className={styles.mailIcon}><MailOutlined /> psikolog@mehmetaker.com</Button>
 
-                        <p
-                            style={{
-                                fontSize: "20px",
-                                fontWeight: "600",
-                                display: "flex",
-                                alignItems: "center",
-                                gap: "16px",
-                            }}
-                        >
-                            <LinkedinOutlined
-                                className={styles.linkedin}
-                                onClick={() =>
-                                    window.open(
-                                        "https://www.linkedin.com/in/pskmehmetaker/"
-                                    )
-                                }
-                            />
-                            <span style={{ marginLeft: "auto" }}>Linkedin</span>
-                        </p>
-                        <p
-                            style={{
-                                fontSize: "20px",
-                                fontWeight: "600",
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                gap: "16px",
-                            }}
-                        >
-                            <MailOutlined className={styles.mailIcon} />{" "}
-                            psikolog@mehmetaker.com
-                        </p>
                     </div>
                 </Col>
                 {/*

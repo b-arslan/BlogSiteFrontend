@@ -1,8 +1,11 @@
 .header {
     height: 10vh;
-
+    z-index: 2;
+    opacity: 1;
+    position: sticky;
+    width: 100%;
     @media (max-width: 468px) {
-        height: 15vh;
+        height: 18vh;
     }
     // box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
 }
@@ -94,7 +97,10 @@
 .instagram,
 .linkedin,
 .mailIcon {
-    font-size: 40px;
+    font-size: 26px;
+    height: auto;
+    width: auto;
+    border-radius: 12px;
     color: #000;
     @media (max-width: 768px) {
         font-size: 32px;
@@ -113,6 +119,7 @@
     background: #fff;
     height: auto;
     padding: 24px 24px;
+    z-index: 1;
 }
 
 .titleHeader {
@@ -121,6 +128,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 0;
 
     @media (max-width: 768px) {
         font-size: 20px;

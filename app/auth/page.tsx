@@ -46,7 +46,7 @@ const LoginPage = () => {
 
     return (
 
-        <Layout style={{ height: '100vh' }}>
+        <Layout style={{ height: '100vh', zIndex: '999', opacity: '1' }}>
             <Content style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <Row>
                     <Col span={24} className={styles.myBoxShadow} >

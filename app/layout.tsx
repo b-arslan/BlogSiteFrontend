@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import "./styles/globals.scss";
 import { Inter } from "next/font/google";
 import { Analytics } from '@vercel/analytics/react';
+import HeaderComponent from "./components/HeaderComponent";
+import FooterComponent from "./components/FooterComponent";
+import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,8 +21,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="tr">
+      <Head>
+        <link rel="preload" as="style" href="/styles/gloabls.scss"/>
+      </Head>
       <body className={inter.className}>
-        {children}
+        <HeaderComponent />
+        <main>{children}</main>
+        <FooterComponent />
         <Analytics />
       </body>
     </html>

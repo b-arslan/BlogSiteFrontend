@@ -1,16 +1,11 @@
 'use client';
 import { useState, useEffect } from "react";
-import { Layout, Row, Col, Button, Card, Divider } from "antd";
-import { EditOutlined, InstagramOutlined, LinkedinOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
+import { Layout, Row, Col, Card } from "antd";
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense } from "react";
 import styles from '../styles/page.module.scss';
-import PSILogo from '../../public/psi.png';
-import Image from "next/image";
-import HeaderComponent from "../components/HeaderComponent";
-import FooterComponent from "../components/FooterComponent";
 
-const { Header, Content, Footer } = Layout;
+const { Content } = Layout;
 
 interface Blog {
     video_url: any;
@@ -63,10 +58,6 @@ export default function Blogs() {
     return (
         <Suspense fallback={<div>Loading...</div>}>
             <Layout className={styles.layout}>
-                <Header className={styles.header} style={{ background: "#ffffff", padding: "0px 24px", textAlign: 'center' }}>
-                    <HeaderComponent />
-                </Header>
-
                 <Content className={styles.content}>
                     <Row style={{ height: '100%' }}>
                         <Col span={4} style={{ padding: '0rem 1rem', overflowY: 'auto', display: `${displayMenu}` }}>
@@ -128,10 +119,6 @@ export default function Blogs() {
                         </Col>
                     </Row>
                 </Content>
-
-                <Footer className={styles.footer} >
-                    <FooterComponent />
-                </Footer>
             </Layout>
         </Suspense>
     );
