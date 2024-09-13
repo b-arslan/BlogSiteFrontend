@@ -10,7 +10,7 @@ const About = () => {
     return (
         <Layout className={styles.layout}>
             <Content className={styles.content}>
-                <Row style={{ height: '100%' }}>
+                <Row style={{ height: '100%', width: '100%' }}>
                     <Col span={24} style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
                         <div className={styles.myDiv} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative' }}>
                             <h1 style={{ alignSelf: 'center', marginTop: '24px' }}>Hakkımda</h1>

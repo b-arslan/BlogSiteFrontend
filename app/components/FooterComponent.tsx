@@ -41,9 +41,9 @@ const FooterComponent = () => {
                             marginTop: '4rem'
                         }}
                     >
-                        <Button type="text" className={styles.instagram} onClick={() => window.open("https://www.instagram.com/psikolog.mehmetaker/")}><InstagramOutlined /> Instagram</Button>
-                        <Button type="text" className={styles.linkedin} onClick={() => window.open("https://www.linkedin.com/in/pskmehmetaker/")}><LinkedinOutlined /> LinkedIn</Button>
-                        <Button type="text" className={styles.mailIcon}><MailOutlined /> psikolog@mehmetaker.com</Button>
+                        <Button type="text" className={styles.instagram} onClick={() => window.open("https://www.instagram.com/psikolog.mehmetaker/")}><InstagramOutlined className={styles.iconBtn} /> Instagram</Button>
+                        <Button type="text" className={styles.linkedin} onClick={() => window.open("https://www.linkedin.com/in/pskmehmetaker/")}><LinkedinOutlined className={styles.iconBtn} /> LinkedIn</Button>
+                        <Button type="text" className={styles.mailIcon}><MailOutlined className={styles.iconBtn} /> psikolog@mehmetaker.com</Button>
 
                     </div>
                 </Col>
