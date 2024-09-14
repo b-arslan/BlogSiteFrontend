@@ -1,5 +1,4 @@
 'use client';
-import { useState } from "react";
 import axios from "axios";
 import { Layout, Row, Col, Button, Form, Input, FormProps } from 'antd';
 import { useRouter } from "next/navigation";
@@ -24,7 +23,7 @@ const LoginPage = () => {
     const onFinish = async (values: FieldType) => {
         try {
             // Make an API call to your backend for login
-            const res = await axios.post('https://blog-site-backend-ebon.vercel.app/api/login', {
+            const res = await axios.post('/api/login', {
                 email: values.username, // Or map it properly to the "email" in your form
                 password: values.password
             });

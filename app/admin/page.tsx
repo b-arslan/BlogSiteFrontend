@@ -125,7 +125,7 @@ const Admin = () => {
         formData.append("image", file);
     
         try {
-            const response = await axios.post('https://blog-site-backend-ebon.vercel.app/api/upload-image', formData, {
+            const response = await axios.post('/api/upload-image', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
     
@@ -176,7 +176,7 @@ const Admin = () => {
         }
     
         try {
-            const res = await axios.post('https://blog-site-backend-ebon.vercel.app/api/blog', formData, {
+            const res = await axios.post('/api/blog', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
             setShowSuccess(true);
