@@ -12,7 +12,7 @@ const HeaderComponent = () => {
     const router = useRouter();
 
     return (
-        <Header className={styles.header} style={{ background: "#ffffff", padding: "12px 24px", textAlign: 'center' }}>
+        <Header id="header-component" className={styles.header} style={{ background: "#ffffff", padding: "12px 24px", textAlign: 'center' }}>
             <div className={styles.headerRow}>
                 <div className={styles.headerCol1}>
                     <h1
