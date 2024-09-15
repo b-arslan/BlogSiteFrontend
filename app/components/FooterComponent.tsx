@@ -14,7 +14,7 @@ const FooterComponent = () => {
     const [loading, setLoading] = useState(false);
 
     return (
-        <Footer className={styles.footer}>
+        <Footer id="footer-component" className={styles.footer}>
             <Row>
                 <Col
                     span={24}
