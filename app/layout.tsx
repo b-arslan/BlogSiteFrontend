@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./styles/globals.scss";
 import { Inter } from "next/font/google";
-import { Analytics } from '@vercel/analytics/react';
 import HeaderComponent from "./components/HeaderComponent";
 import FooterComponent from "./components/FooterComponent";
 import Head from "next/head";
@@ -28,7 +27,6 @@ export default function RootLayout({
         <HeaderComponent />
         <main>{children}</main>
         <FooterComponent />
-        <Analytics />
       </body>
     </html>
   );
