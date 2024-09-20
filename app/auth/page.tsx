@@ -1,9 +1,9 @@
 'use client';
 import axios from "axios";
-import { Layout, Row, Col, Button, Form, Input, FormProps } from 'antd';
+import { Layout, Row, Col, Button, Form, Input, FormProps, message } from 'antd';
 import { useRouter } from "next/navigation";
 import styles from '../styles/admin.module.scss';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const { Content } = Layout;
 
@@ -20,6 +20,7 @@ const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
 const LoginPage = () => {
 
     const router = useRouter();
+    const [loadingBtn, setLoadingBtn] = useState(false);
 
     useEffect(() => {
         // Hide header and footer on admin page
@@ -37,12 +38,22 @@ const LoginPage = () => {
     }, []);
 
     const onFinish = async (values: FieldType) => {
+        setLoadingBtn(true);
         try {
             // Make an API call to your backend for login
             const res = await axios.post('/api/login', {
                 email: values.username, // Or map it properly to the "email" in your form
                 password: values.password
             });
+
+            if (res.data.success) {
+                message.success({
+                    content: res.data.message,
+                    duration: 1
+                })
+            } else {
+                message.error(res.data.message || 'Giriş Başarısız.');
+            }
             
             const token = 'Authorized'; // Expect the token to come from your API response
             const expiresIn = 3600; // 1 hour in seconds
@@ -51,11 +62,14 @@ const LoginPage = () => {
     
             localStorage.setItem('token', token);
             localStorage.setItem('tokenExpiry', expirationTime.toString());
-            
+        
             // Redirect to the admin page after successful login
             router.push('/admin');
         } catch (error) {
+            message.error('Hata Oluştu');
             console.error('Login failed: ', error);
+        } finally {
+            setLoadingBtn(false);
         }
     };
 
@@ -94,7 +108,7 @@ const LoginPage = () => {
                             </Form.Item>
 
                             <Form.Item style={{width: '100%'}} wrapperCol={{ span: 24 }}>
-                                <Button type="primary" htmlType="submit" style={{width: '100%'}}>
+                                <Button loading={loadingBtn} type="primary" htmlType="submit" style={{width: '100%'}}>
                                     Log In
                                 </Button>
                             </Form.Item>
