@@ -37,7 +37,7 @@ const NotFoundPage = () => {
 
     return (
         <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', flexDirection: 'column', gap: '2rem'}}>
-            <h1>404 - Sayfa Bulunamadı</h1>
+            <h1 style={{textAlign: 'center'}}>404 - Sayfa Bulunamadı</h1>
             <p>Üzgünüz, aradığınız sayfa mevcut değil.</p>
         </div>
     );

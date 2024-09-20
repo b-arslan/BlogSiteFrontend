@@ -175,7 +175,7 @@ export default function Blogs() {
                                                     }}
                                                 />
                                             )}
-                                            <h1>{selectedBlog.title}</h1>
+                                            <h1 style={{textAlign: 'center'}}>{selectedBlog.title}</h1>
                                             <p style={{ fontSize: '1rem', color: '#888' }}>
                                                 {new Date(selectedBlog.created_at).toLocaleDateString('tr-TR', {
                                                     day: 'numeric',
@@ -184,7 +184,7 @@ export default function Blogs() {
                                                 })} - {selectedBlog.created_by}
                                             </p>
                                         </div>
-                                        <div style={{ marginTop: '2rem' }} dangerouslySetInnerHTML={{ __html: selectedBlog.content }} />
+                                        <div style={{ marginTop: '2rem', textAlign: 'left' }} dangerouslySetInnerHTML={{ __html: selectedBlog.content }} />
                                     </div>
                                 ) : (
                                     !isMobileView && (
