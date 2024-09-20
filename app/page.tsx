@@ -4,10 +4,8 @@ import { Layout, Row, Col, Card } from "antd";
 import styles from "./styles/page.module.scss";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import FooterComponent from "./components/FooterComponent";
-import HeaderComponent from "./components/HeaderComponent";
 
-const { Header, Content } = Layout;
+const { Content } = Layout;
 const { Meta } = Card;
 
 interface Blog {
@@ -81,7 +79,7 @@ const Home = () => {
                                         <div
                                             style={{ color: '#000' }}
                                             dangerouslySetInnerHTML={{
-                                                __html: `${blog.content.substring(0, 150)}...`,
+                                                __html: `${blog.content.substring(0, 247)}...`,
                                             }}
                                         />
                                     } 

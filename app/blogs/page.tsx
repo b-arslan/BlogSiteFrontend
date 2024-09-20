@@ -1,9 +1,11 @@
 'use client';
 import { useState, useEffect } from "react";
-import { Layout, Row, Col, Card } from "antd";
+import { Layout, Row, Col, Card, Button } from "antd";
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense } from "react";
 import styles from '../styles/page.module.scss';
+import axios from "axios";
+import { ArrowLeftOutlined } from "@ant-design/icons";
 
 const { Content } = Layout;
 
@@ -20,23 +22,62 @@ interface Blog {
 export default function Blogs() {
     const [blogs, setBlogs] = useState<Blog[]>([]);
     const [selectedBlog, setSelectedBlog] = useState<Blog | null>(null);
+    const [isMobileView, setIsMobileView] = useState(false); // Ekran genişliğini takip etmek için
     const router = useRouter();
-    const searchParams = useSearchParams(); // Get query params
-    const blogId = searchParams.get('id'); // Get the selected blog's ID
+    const searchParams = useSearchParams(); // Sorgu parametrelerini almak için
+    const blogId = searchParams.get('id'); // Seçili blogun ID'si
 
     useEffect(() => {
-        const blogData: Blog[] = JSON.parse(localStorage.getItem('blogData') || '[]');
-        blogData.reverse(); // reverse the data
-        setBlogs(blogData);
+        const handleResize = () => {
+            setIsMobileView(window.innerWidth < 1024);
+        };
 
-        if (blogId) {
-            const selected = blogData.find((blog) => blog.id === Number(blogId));
-            setSelectedBlog(selected || null);
+        handleResize();
+
+        window.addEventListener("resize", handleResize);
+
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
+
+    useEffect(() => {
+        const blogDataString = localStorage.getItem('blogData');
+        
+        if (blogDataString) {
+            const blogData: Blog[] = JSON.parse(blogDataString);
+            blogData.reverse(); // Verileri ters çevir
+            setBlogs(blogData);
+    
+            if (blogId) {
+                const selected = blogData.find((blog) => blog.id === Number(blogId));
+                setSelectedBlog(selected || null);
+            }
         }
     }, [blogId]);
 
+    useEffect(() => {
+        if (blogs.length === 0) {
+            const getBlogs = async () => {
+                try {
+                    const response = await axios.get('/api/blogposts');
+                    setBlogs(response.data.content);
+                    localStorage.setItem('blogData', JSON.stringify(response.data.content));
+                } catch (error) {
+                    console.error('Error fetching blogs:', error);
+                }
+            };
+    
+            getBlogs();
+        }
+    }, [blogs]);
+
     const handleBlogSelect = (blog: Blog) => {
         setSelectedBlog(blog);
+    };
+
+    const handleBackToList = () => {
+        setSelectedBlog(null);
     };
 
     let blogText;
@@ -49,7 +90,7 @@ export default function Blogs() {
         colSpan = 24;
         colStyle = undefined;
     } else {
-        blogText = 'Henüz Blog Seçilmedi'
+        blogText = 'Henüz Blog Seçilmedi';
         displayMenu = 'block';
         colSpan = 20;
         colStyle = styles.colBlog;
@@ -58,65 +99,102 @@ export default function Blogs() {
     return (
         <Suspense fallback={<div>Loading...</div>}>
             <Layout className={styles.layout}>
-                <Content className={styles.content}>
+                <Content className={styles.content} style={{gap: isMobileView ? '0' : '5rem', padding: isMobileView ? '12px 12px' : '48px 12px', alignItems: isMobileView ? 'flex-start' : 'center'}}>
+                    {/* Geri Dön Butonu için ayrı bir Row ve Col */}
+                    {isMobileView && selectedBlog && (
+                        <Row>
+                            <Col span={24} style={{padding: '0px 0px 12px 0px'}}>
+                                <Button type="text" onClick={handleBackToList} className={styles.btn} style={{border: '2px solid #c1c1c1', borderRadius: '7px'}}>
+                                    <ArrowLeftOutlined /> Bloglar
+                                </Button>
+                            </Col>
+                        </Row>
+                    )}
                     <Row style={{ height: '100%' }}>
-                        <Col span={4} style={{ padding: '0rem 1rem', overflowY: 'auto', display: `${displayMenu}` }}>
-                            {blogs.map((blog) => (
-                                <Card
-                                    key={blog.id}
-                                    hoverable
-                                    onClick={() => handleBlogSelect(blog)}
-                                    style={{
-                                        marginBottom: '1rem',
-                                        border: selectedBlog?.id === blog.id ? '2px solid #afafaf' : 'none', // Highlight selected blog
-                                        borderRadius: '12px'
-                                    }}
-                                >
-                                    <h3>{blog.title}</h3>
-                                    <p style={{ fontSize: '0.9rem', color: '#888' }}>
-                                        {new Date(blog.created_at).toLocaleDateString('tr-TR', {
-                                            day: 'numeric',
-                                            month: 'long',
-                                            year: 'numeric',
-                                        })}
-                                    </p>
-                                </Card>
-                            ))}
-                        </Col>
-
-                        <Col span={colSpan} className={colStyle}>
-                            {selectedBlog ? (
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: '70%', justifyContent: 'center', alignItems: 'center' }}>
-                                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '1rem' }}>
-                                        {selectedBlog.video_url ? (
-                                            <video width="400" controls>
-                                                <source src={selectedBlog.video_url} type="video/mp4" />
-                                                Tarayıcınız bu videoyu oynatamıyor.
-                                            </video>
-                                        ) : (
-                                            <img
-                                                src={selectedBlog.cover_image_url}
-                                                alt={selectedBlog.title}
-                                                style={{ width: '400px', maxHeight: '400px', objectFit: 'cover', marginBottom: '1rem', borderRadius: '12px' }}
-                                            />
-                                        )}
-                                        <h1>{selectedBlog.title}</h1>
-                                        <p style={{ fontSize: '1rem', color: '#888' }}>
-                                            {new Date(selectedBlog.created_at).toLocaleDateString('tr-TR', {
+                        {(!isMobileView || (isMobileView && selectedBlog == null)) && (
+                            <Col
+                                span={isMobileView ? 24 : 4} // Mobilde tam genişlik, desktopta 4 sütun
+                                style={{ padding: '0rem 1rem', overflowY: 'auto', display: displayMenu }}
+                            >
+                                {blogs.map((blog) => (
+                                    <Card
+                                        key={blog.id}
+                                        hoverable
+                                        onClick={() => handleBlogSelect(blog)}
+                                        style={{
+                                            marginBottom: '1rem',
+                                            border: selectedBlog?.id === blog.id ? '2px solid #afafaf' : 'none',
+                                            borderRadius: '12px'
+                                        }}
+                                    >
+                                        <h3>{blog.title}</h3>
+                                        <p style={{ fontSize: '0.9rem', color: '#888' }}>
+                                            {new Date(blog.created_at).toLocaleDateString('tr-TR', {
                                                 day: 'numeric',
                                                 month: 'long',
                                                 year: 'numeric',
-                                            })} - {selectedBlog.created_by}
+                                            })}
                                         </p>
+                                    </Card>
+                                ))}
+                            </Col>
+                        )}
+
+                        {(!isMobileView || (isMobileView && selectedBlog != null)) && (
+                            <Col
+                                span={isMobileView ? 24 : colSpan} // Mobilde tam genişlik
+                                className={colStyle}
+                            >
+                                {selectedBlog ? (
+                                    <div
+                                        style={{
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            gap: '1rem',
+                                            width: isMobileView ? '90%' : '70%', // Mobilde genişlik azaltıldı
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                        }}
+                                    >
+                                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '1rem' }}>
+                                            {selectedBlog.video_url ? (
+                                                <video width={isMobileView ? "350" : "400"} controls> {/* Mobilde video genişliği azaltıldı */}
+                                                    <source src={selectedBlog.video_url} type="video/mp4" />
+                                                    Tarayıcınız bu videoyu oynatamıyor.
+                                                </video>
+                                            ) : (
+                                                <img
+                                                    src={selectedBlog.cover_image_url}
+                                                    alt={selectedBlog.title}
+                                                    style={{
+                                                        width: isMobileView ? '99%' : '400px', // Mobilde resim genişliği azaltıldı
+                                                        maxHeight: '400px',
+                                                        objectFit: 'cover',
+                                                        marginBottom: '1rem',
+                                                        borderRadius: '12px'
+                                                    }}
+                                                />
+                                            )}
+                                            <h1>{selectedBlog.title}</h1>
+                                            <p style={{ fontSize: '1rem', color: '#888' }}>
+                                                {new Date(selectedBlog.created_at).toLocaleDateString('tr-TR', {
+                                                    day: 'numeric',
+                                                    month: 'long',
+                                                    year: 'numeric',
+                                                })} - {selectedBlog.created_by}
+                                            </p>
+                                        </div>
+                                        <div style={{ marginTop: '2rem' }} dangerouslySetInnerHTML={{ __html: selectedBlog.content }} />
                                     </div>
-                                    <div style={{ marginTop: '2rem' }} dangerouslySetInnerHTML={{ __html: selectedBlog.content }} />
-                                </div>
-                            ) : (
-                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                    <h1>{blogText}</h1>
-                                </div>
-                            )}
-                        </Col>
+                                ) : (
+                                    !isMobileView && (
+                                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                            <h1>{blogText}</h1>
+                                        </div>
+                                    )
+                                )}
+                            </Col>
+                        )}
                     </Row>
                 </Content>
             </Layout>
