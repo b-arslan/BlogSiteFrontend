@@ -110,7 +110,7 @@ export default function Blogs() {
                             </Col>
                         </Row>
                     )}
-                    <Row style={{ height: '100%' }}>
+                    <Row style={{ height: '100%', width: '100%' }}>
                         {(!isMobileView || (isMobileView && selectedBlog == null)) && (
                             <Col
                                 span={isMobileView ? 24 : 4} // Mobilde tam genişlik, desktopta 4 sütun
