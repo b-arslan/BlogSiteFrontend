@@ -1,9 +1,10 @@
 'use client';
 import { useState, useEffect } from "react";
-import { Layout, Row, Col, Card } from "antd";
+import { Layout, Row, Col, Card, Spin } from "antd";
 import styles from "./styles/page.module.scss";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const { Content } = Layout;
 const { Meta } = Card;
@@ -18,6 +19,7 @@ interface Blog {
 
 const Home = () => {
     const [blogs, setBlogs] = useState<Blog[]>([]);
+    const [loading, setLoading] = useState(true);
     const router = useRouter();
 
     useEffect(() => {
@@ -33,6 +35,12 @@ const Home = () => {
 
         getBlogs();
     }, []);
+
+    useEffect(() => {
+        if (blogs.length > 0) {
+            setLoading(false);
+        }
+    }, [blogs]);
 
     return (
         <Layout className={styles.layout}>
@@ -53,42 +61,51 @@ const Home = () => {
                     </Col>
                 </Row>
 
-                <Row style={{ justifyContent: 'center', display: 'flex', gap: '2rem', marginTop: '2rem' }}>
-                    {blogs.map((blog) => (
-                        <Col key={blog.id}>
-                            <Card
-                                hoverable
-                                className='card-container'
-                                style={{ width: 300, height: 475 }}
-                                cover={
-                                    <img
-                                        alt={blog.title}
-                                        src={blog.cover_image_url}
-                                        style={{ width: 300, height: 180, objectFit: 'cover' }}
-                                    />
-                                }
-                                onClick={() => router.push(`/blogs?id=${blog.id}`)}
-                            >
-                                <Meta
-                                    title={
-                                        <div style={{ fontSize: '24px', fontWeight: 'bold' }}>
-                                            {blog.title}
-                                        </div>
-                                    }
-                                    description={
-                                        <div
-                                            style={{ color: '#000' }}
-                                            dangerouslySetInnerHTML={{
-                                                __html: `${blog.content.substring(0, 247)}...`,
-                                            }}
-                                        />
-                                    } 
-                                />
-                            </Card>
-                        </Col>
-                    ))}
-                </Row>
+                <Row style={{ width: '100%', height: '100%' }}>
+                    <Col span={24} style={{display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '3rem'}}>
+                        <h2 style={{fontSize: '1.9em'}}>Bloglar</h2>
+                    </Col>
 
+                    {loading ? (
+                        <Col span={24} style={{ display: 'flex', justifyContent: 'center', marginTop: '4rem' }}>
+                            <Spin indicator={<LoadingOutlined spin style={{ fontSize: '64px', color: '#000', marginTop: '2rem' }} />} />
+                        </Col>
+                    ) : (
+                        blogs.map((blog) => (
+                            <Col key={blog.id} span={24} style={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '2rem'}}>
+                                <Card
+                                    hoverable
+                                    className='card-container'
+                                    style={{ width: 300, height: 475 }}
+                                    cover={
+                                        <img
+                                            alt={blog.title}
+                                            src={blog.cover_image_url}
+                                            style={{ width: 300, height: 180, objectFit: 'cover' }}
+                                        />
+                                    }
+                                    onClick={() => router.push(`/blogs?id=${blog.id}`)}
+                                >
+                                    <Meta
+                                        title={
+                                            <div style={{ fontSize: '24px', fontWeight: 'bold' }}>
+                                                {blog.title}
+                                            </div>
+                                        }
+                                        description={
+                                            <div
+                                                style={{ color: '#000' }}
+                                                dangerouslySetInnerHTML={{
+                                                    __html: `${blog.content.substring(0, 247)}...`,
+                                                }}
+                                            />
+                                        }
+                                    />
+                                </Card>
+                            </Col>
+                        ))
+                    )}
+                </Row>
             </Content>
         </Layout>
     );
