@@ -41,8 +41,8 @@ const Admin = () => {
     }, []);
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
-        const tokenExpiry = localStorage.getItem('tokenExpiry');
+        const token = localStorage.getItem('akerToken');
+        const tokenExpiry = localStorage.getItem('akerTokenExpiry');
 
         // If no token or token expiry is found, redirect to login page
         if (!token || !tokenExpiry) {

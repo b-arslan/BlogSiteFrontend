@@ -45,33 +45,43 @@ const LoginPage = () => {
                 email: values.username, // Or map it properly to the "email" in your form
                 password: values.password
             });
-
+    
             if (res.data.success) {
                 message.success({
                     content: res.data.message,
                     duration: 1
-                })
+                });
+    
+                const token = 'Authorized'; // Expect the token to come from your API response
+                const expiresIn = 3600; // 1 hour in seconds
+        
+                const expirationTime = new Date().getTime() + expiresIn * 1000; // Setting expiration 1 hour from now
+        
+                localStorage.setItem('akerToken', token);
+                localStorage.setItem('akerTokenExpiry', expirationTime.toString());
+            
+                router.push('/admin');
             } else {
                 message.error(res.data.message || 'Giriş Başarısız.');
             }
-            
-            const token = 'Authorized'; // Expect the token to come from your API response
-            const expiresIn = 3600; // 1 hour in seconds
+        } catch (error: any) {
+            if (error.response) {
+                const statusCode = error.response.status;
+                const errorMessage = error.response.data?.message || 'Hata Oluştu';
     
-            const expirationTime = new Date().getTime() + expiresIn * 1000; // Setting expiration 1 hour from now
-    
-            localStorage.setItem('token', token);
-            localStorage.setItem('tokenExpiry', expirationTime.toString());
-        
-            // Redirect to the admin page after successful login
-            router.push('/admin');
-        } catch (error) {
-            message.error('Hata Oluştu');
-            console.error('Login failed: ', error);
+                if (statusCode === 404) {
+                    message.error(errorMessage);
+                } else {
+                    message.error('Giriş Başarısız.');
+                }
+            } else {
+                // General error handling (e.g., network issues)
+                message.error('Hata Oluştu.');
+            }
         } finally {
             setLoadingBtn(false);
         }
-    };
+    };    
 
     return (
         <Layout style={{ height: '100vh', zIndex: '999', opacity: '1' }}>
