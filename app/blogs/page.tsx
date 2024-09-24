@@ -151,14 +151,14 @@ export default function Blogs() {
                                             display: 'flex',
                                             flexDirection: 'column',
                                             gap: '1rem',
-                                            width: isMobileView ? '90%' : '70%', // Mobilde genişlik azaltıldı
+                                            width: '90%',
                                             justifyContent: 'center',
                                             alignItems: 'center',
                                         }}
                                     >
                                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '1rem' }}>
                                             {selectedBlog.video_url ? (
-                                                <video width={isMobileView ? "350" : "400"} controls> {/* Mobilde video genişliği azaltıldı */}
+                                                <video width={isMobileView ? "350" : "400"} controls>
                                                     <source src={selectedBlog.video_url} type="video/mp4" />
                                                     Tarayıcınız bu videoyu oynatamıyor.
                                                 </video>
@@ -184,7 +184,7 @@ export default function Blogs() {
                                                 })} - {selectedBlog.created_by}
                                             </p>
                                         </div>
-                                        <div style={{ marginTop: '2rem', textAlign: 'left' }} dangerouslySetInnerHTML={{ __html: selectedBlog.content }} />
+                                        <div style={{ marginTop: '2rem', textAlign: isMobileView ? 'left' : 'justify' }} dangerouslySetInnerHTML={{ __html: selectedBlog.content }} />
                                     </div>
                                 ) : (
                                     !isMobileView && (
