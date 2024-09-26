@@ -124,7 +124,7 @@ const FooterComponent = () => {
                             </Form.Item>
 
                             <Form.Item>
-                                <Button className={styles.formBtn} type="primary" htmlType="submit" loading={loading}>Gönder</Button>
+                                <Button disabled={loading} className={styles.formBtn} type="primary" htmlType="submit" loading={loading}>Gönder</Button>
                             </Form.Item>
                         </Form>
                     </div>
