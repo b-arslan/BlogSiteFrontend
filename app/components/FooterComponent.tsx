@@ -42,15 +42,16 @@ const FooterComponent = () => {
                 (result) => {
                     message.success('Mesaj başarıyla gönderildi!');
                     form.resetFields();
+                    setLoading(false);
                 },
                 (error) => {
                     message.error('Mesaj gönderilemedi.');
                     console.log('FAILED...', error.text);
+                    setLoading(false);
                 }
             );
         } catch (err) {
             message.error('Bir hata oluştu. Lütfen tekrar deneyin.');
-        } finally {
             setLoading(false);
         }
     };
@@ -124,7 +125,7 @@ const FooterComponent = () => {
                             </Form.Item>
 
                             <Form.Item>
-                                <Button disabled={loading} className={styles.formBtn} type="primary" htmlType="submit" loading={loading}>Gönder</Button>
+                                <Button className={styles.formBtn} type="primary" htmlType="submit" loading={loading}>Gönder</Button>
                             </Form.Item>
                         </Form>
                     </div>
