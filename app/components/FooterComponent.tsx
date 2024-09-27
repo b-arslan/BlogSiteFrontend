@@ -99,9 +99,9 @@ const FooterComponent = () => {
         <Footer id="footer-component" className={styles.footer}>
             <Row style={{height: '100%'}}>
 
-                <Col span={24}>
-                    <div>
-                        <div style={{ position: "absolute", top: "0" }}>
+                <Col span={24} className={styles.footerCol}>
+                    <div className={styles.firstDiv}>
+                        <div className={styles.firstDivHeader}>
                             <h2 className={styles.footerTitle}>Sosyal</h2>
                         </div>
 
@@ -122,10 +122,10 @@ const FooterComponent = () => {
 
                         </div>
                     </div>
-
-                    <div>
+                        <Divider type="vertical" style={{height: '100%'}} />
+                    <div className={styles.secondDiv}>
                         
-                        <div style={{ position: "absolute", top: "0", width: '100%', textAlign: 'center' }}>
+                        <div className={styles.secondDivHeader}>
                             <h2 className={styles.footerTitle}>İletişim</h2>
                         </div>
 
@@ -161,15 +161,22 @@ const FooterComponent = () => {
                         </div>
 
                     </div>
-
-                    <div>
-
-                        <div ref={mapContainerRef} id="map" style={{ width: '100%', height: '400px' }} />
+                        <Divider type="vertical" style={{height: '100%'}} />
+                    <div className={styles.thirdDiv}>
+                        
+                        <div className={styles.thirdDivHeader}>
+                            <h2 className={styles.footerTitle}>Adres</h2>
+                        </div>
+                        
+                        <div style={{marginTop: '3rem'}}>
+                            <p>Melikşah, Melikşah Cd. No:9 D:3, 42090 Meram/Konya</p>
+                        </div>
+                        
+                        <div ref={mapContainerRef} id="map" style={{ width: '92%', height: '350px', marginTop: '1.5rem' }} />
+                        
 
                     </div>
                 </Col>
-                
-                {/* <Divider type="horizontal" style={{height: 'auto'}} /> */}
             </Row>
         </Footer>
     );

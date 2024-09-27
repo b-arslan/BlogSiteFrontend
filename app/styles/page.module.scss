@@ -136,7 +136,7 @@
 .footer {
     background: #fff;
     height: auto;
-    padding: 24px 24px;
+    padding: 24px 0px;
     z-index: 1;
 }
 
@@ -219,7 +219,7 @@
 }
 
 .contactForm {
-    width: 40%;
+    width: 80%;
     border: 2px solid #c1c1c1;
     border-radius: 12px;
     padding: 24px;
@@ -238,4 +238,40 @@
     // border: 2px solid #c1c1c1 !important;
     border-color: #c1c1c1 !important;
     box-shadow: none !important;
+}
+
+.firstDiv, .thirdDiv {
+    width: 30%;
+}
+
+.secondDiv {
+    width: 40%;
+}
+
+.footerCol {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.firstDivHeader, .thirdDivHeader {
+    position: absolute;
+    top: 0;
+    width: 30%;
+    text-align: center;
+}
+
+.secondDivHeader {
+    position: absolute;
+    top: 0;
+    text-align: center;
+    width: 40%;
+}
+
+.thirdDiv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
