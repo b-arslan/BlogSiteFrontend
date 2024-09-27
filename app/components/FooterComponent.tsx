@@ -99,48 +99,49 @@ const FooterComponent = () => {
         <Footer id="footer-component" className={styles.footer}>
             <Row style={{height: '100%'}}>
 
-                <Col span={24} className={styles.footerCol}>
-                    <div className={styles.firstDiv}>
-                        <div className={styles.firstDivHeader}>
-                            <h2 className={styles.footerTitle}>Sosyal</h2>
-                        </div>
+                <Col span={24}>
+                
+                    <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                        <div style={{display: 'flex', flexDirection: 'column', textAlign: 'center', gap: '1.5rem'}}>
 
-                        <div
-                            style={{
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                flexDirection: "column",
-                                width: "100%",
-                                gap: '0.2rem',
-                                marginTop: '4rem'
-                            }}
-                        >
+                        <h2 style={{fontSize: '24px'}}>Sosyal</h2>
+
+                        <div style={{display: 'flex', flexDirection: 'column'}}>
                             <Button type="text" className={styles.instagram} onClick={() => window.open("https://www.instagram.com/psikolog.mehmetaker/")}><InstagramOutlined className={styles.iconBtn} /> Instagram</Button>
                             <Button type="text" className={styles.linkedin} onClick={() => window.open("https://www.linkedin.com/in/pskmehmetaker/")}><LinkedinOutlined className={styles.iconBtn} /> LinkedIn</Button>
-                            <Button type="text" className={styles.mailIcon} onClick={copyToClipboard}><MailOutlined className={styles.iconBtn} /> psikolog@mehmetaker.com</Button>
-
+                            <Button type="text" className={styles.mailIcon} onClick={copyToClipboard}><MailOutlined className={styles.iconBtn} /> psikolog@mehmetaker.com</Button>  
+                        </div>
                         </div>
                     </div>
-                        <Divider type="vertical" style={{height: '100%'}} />
-                    <div className={styles.secondDiv}>
-                        
-                        <div className={styles.secondDivHeader}>
-                            <h2 className={styles.footerTitle}>İletişim</h2>
+
+                </Col>
+                <Divider type="horizontal"/>
+                <Col span={24} style={{marginTop: '2rem'}} className={styles.footerCol}>
+                
+                    <div style={{width: '49%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem', flexDirection: 'column'}}>
+
+                        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '3rem'}}>
+                            <div style={{textAlign: 'center', display: 'flex', gap: '1.5rem', flexDirection: 'column'}}>
+                                <h2 style={{fontSize: '24px'}}>Adres</h2>
+                                <p style={{fontSize: '16px'}}>Melikşah, Melikşah Cd. No:9 D:3, 42090 Meram/Konya</p>
+                            </div>
                         </div>
 
-                        <div 
-                            style={{
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                flexDirection: "column",
-                                width: "100%",
-                                gap: '0.2rem',
-                                marginTop: '4rem'
-                            }}
-                        >
+                        <div ref={mapContainerRef} id="map" style={{ width: '80%', height: '350px', border: '2px solid #c1c1c1', borderRadius: '12px' }} />
+                    </div>
 
+                    <Divider type="vertical" style={{height: '100%'}} />
+
+                    <div style={{width: '49%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '1rem'}}>
+
+                        <div  style={{display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '3rem'}}>
+                            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '1.5rem'}}>
+                                <h2 style={{fontSize: '24px'}}>İletişim</h2>
+                                <p style={{fontSize: '16px'}}>Bana ulaşın</p>
+                            </div>
+                        </div>
+
+                        <div style={{width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                             <Form form={form} name="contact" layout="vertical" onFinish={onFinish} className={styles.contactForm}>
                                 <Form.Item label='Adınız' name='name' rules={[{required: true, message: 'Lütfen adınızı giriniz!'}]}>
                                     <Input className={styles.formInput} placeholder="Adınızı giriniz"/>
@@ -159,22 +160,6 @@ const FooterComponent = () => {
                                 </Form.Item>
                             </Form>
                         </div>
-
-                    </div>
-                        <Divider type="vertical" style={{height: '100%'}} />
-                    <div className={styles.thirdDiv}>
-                        
-                        <div className={styles.thirdDivHeader}>
-                            <h2 className={styles.footerTitle}>Adres</h2>
-                        </div>
-                        
-                        <div style={{marginTop: '3rem'}}>
-                            <p>Melikşah, Melikşah Cd. No:9 D:3, 42090 Meram/Konya</p>
-                        </div>
-                        
-                        <div ref={mapContainerRef} id="map" style={{ width: '92%', height: '350px', marginTop: '1.5rem' }} />
-                        
-
                     </div>
                 </Col>
             </Row>
