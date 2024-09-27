@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Form, Input, Button, message, Row, Col, Layout, Divider } from "antd";
 import {
     InstagramOutlined,
@@ -8,6 +8,8 @@ import {
 } from "@ant-design/icons";
 import styles from "../styles/page.module.scss";
 import emailjs from '@emailjs/browser';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 
 const { Footer } = Layout;
 const { TextArea } = Input;
@@ -15,6 +17,43 @@ const { TextArea } = Input;
 const FooterComponent = () => {
     const [loading, setLoading] = useState(false);
     const [form] = Form.useForm();
+    const mapContainerRef = useRef<HTMLDivElement>(null);
+    const mapInstanceRef = useRef<L.Map | null>(null);
+
+    useEffect(() => {
+        const coordinates: L.LatLngExpression = [37.86994421452708, 32.474147158457434]; // Coordinates for Konya I&G Danışmanlık
+    
+        if (!mapInstanceRef.current && mapContainerRef.current) {
+          const map = L.map(mapContainerRef.current).setView(coordinates, 13); // Center map on Konya I&G Danışmanlık
+    
+          // Use Stadia Maps tiles for a more modern look
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+          }).addTo(map);  
+    
+          // Custom marker icon resembling Google Maps pin
+          const customIcon = L.icon({
+            iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Map_marker.svg/1200px-Map_marker.svg.png', // Apple Maps-like pin,
+            iconSize: [25, 40], // Size of the icon
+            iconAnchor: [13, 40], // Point of the icon which will correspond to marker's location
+            popupAnchor: [0, -40] // Point from which the popup should open relative to the iconAnchor
+          });
+    
+          // Add a custom marker at Konya I&G Danışmanlık location
+          L.marker(coordinates, { icon: customIcon }).addTo(map)
+            .bindPopup('İ&G Danışmanlık') // Customize the popup text
+            .openPopup(); // Popup will be open by default
+    
+          mapInstanceRef.current = map; // Store the map instance in the ref
+        }
+    
+        return () => {
+          if (mapInstanceRef.current) {
+            mapInstanceRef.current.remove();
+            mapInstanceRef.current = null;
+          }
+        };
+    }, []);
 
     const copyToClipboard = () => {
         navigator.clipboard.writeText('psikolog@mehmetaker.com');
@@ -59,77 +98,78 @@ const FooterComponent = () => {
     return (
         <Footer id="footer-component" className={styles.footer}>
             <Row style={{height: '100%'}}>
-                <Col
-                    span={24}
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        flexDirection: "column",
-                        width: "100%",
-                    }}
-                >
-                    <div style={{ position: "absolute", top: "0" }}>
-                        <h2 className={styles.footerTitle}>Sosyal</h2>
-                    </div>
 
-                    <div
-                        style={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            flexDirection: "column",
-                            width: "100%",
-                            gap: '0.2rem',
-                            marginTop: '4rem'
-                        }}
-                    >
-                        <Button type="text" className={styles.instagram} onClick={() => window.open("https://www.instagram.com/psikolog.mehmetaker/")}><InstagramOutlined className={styles.iconBtn} /> Instagram</Button>
-                        <Button type="text" className={styles.linkedin} onClick={() => window.open("https://www.linkedin.com/in/pskmehmetaker/")}><LinkedinOutlined className={styles.iconBtn} /> LinkedIn</Button>
-                        <Button type="text" className={styles.mailIcon} onClick={copyToClipboard}><MailOutlined className={styles.iconBtn} /> psikolog@mehmetaker.com</Button>
-
-                    </div>
-                </Col>
-                
-                <Divider type="horizontal" style={{height: 'auto'}} />
-                
                 <Col span={24}>
+                    <div>
+                        <div style={{ position: "absolute", top: "0" }}>
+                            <h2 className={styles.footerTitle}>Sosyal</h2>
+                        </div>
 
-                    <div style={{ position: "absolute", top: "0", width: '100%', textAlign: 'center' }}>
-                        <h2 className={styles.footerTitle}>İletişim</h2>
+                        <div
+                            style={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                flexDirection: "column",
+                                width: "100%",
+                                gap: '0.2rem',
+                                marginTop: '4rem'
+                            }}
+                        >
+                            <Button type="text" className={styles.instagram} onClick={() => window.open("https://www.instagram.com/psikolog.mehmetaker/")}><InstagramOutlined className={styles.iconBtn} /> Instagram</Button>
+                            <Button type="text" className={styles.linkedin} onClick={() => window.open("https://www.linkedin.com/in/pskmehmetaker/")}><LinkedinOutlined className={styles.iconBtn} /> LinkedIn</Button>
+                            <Button type="text" className={styles.mailIcon} onClick={copyToClipboard}><MailOutlined className={styles.iconBtn} /> psikolog@mehmetaker.com</Button>
+
+                        </div>
                     </div>
 
-                    <div 
-                        style={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            flexDirection: "column",
-                            width: "100%",
-                            gap: '0.2rem',
-                            marginTop: '4rem'
-                        }}
-                    >
+                    <div>
+                        
+                        <div style={{ position: "absolute", top: "0", width: '100%', textAlign: 'center' }}>
+                            <h2 className={styles.footerTitle}>İletişim</h2>
+                        </div>
 
-                        <Form form={form} name="contact" layout="vertical" onFinish={onFinish} className={styles.contactForm}>
-                            <Form.Item label='Adınız' name='name' rules={[{required: true, message: 'Lütfen adınızı giriniz!'}]}>
-                                <Input className={styles.formInput} placeholder="Adınızı giriniz"/>
-                            </Form.Item>
+                        <div 
+                            style={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                flexDirection: "column",
+                                width: "100%",
+                                gap: '0.2rem',
+                                marginTop: '4rem'
+                            }}
+                        >
 
-                            <Form.Item label='E-posta' name='email' rules={[{required: true, message: 'Lütfen e-posta adresinizi giriniz!'}, {type: 'email', message: 'Lütfen geçerli bir e-posta adresi giriniz!'}]}>
-                                <Input className={styles.formInput} placeholder="E-posta adresinizi giriniz"/>
-                            </Form.Item>
+                            <Form form={form} name="contact" layout="vertical" onFinish={onFinish} className={styles.contactForm}>
+                                <Form.Item label='Adınız' name='name' rules={[{required: true, message: 'Lütfen adınızı giriniz!'}]}>
+                                    <Input className={styles.formInput} placeholder="Adınızı giriniz"/>
+                                </Form.Item>
 
-                            <Form.Item label='Mesaj' name='content' rules={[{required: true, message: 'Lütfen mesajınızı giriniz!'}]}>
-                                <TextArea autoSize showCount maxLength={500} className={styles.formInput} rows={7} placeholder="Mesajınızı yazınız"/>
-                            </Form.Item>
+                                <Form.Item label='E-posta' name='email' rules={[{required: true, message: 'Lütfen e-posta adresinizi giriniz!'}, {type: 'email', message: 'Lütfen geçerli bir e-posta adresi giriniz!'}]}>
+                                    <Input className={styles.formInput} placeholder="E-posta adresinizi giriniz"/>
+                                </Form.Item>
 
-                            <Form.Item>
-                                <Button className={styles.formBtn} type="primary" htmlType="submit" loading={loading}>Gönder</Button>
-                            </Form.Item>
-                        </Form>
+                                <Form.Item label='Mesaj' name='content' rules={[{required: true, message: 'Lütfen mesajınızı giriniz!'}]}>
+                                    <TextArea autoSize showCount maxLength={500} className={styles.formInput} rows={7} placeholder="Mesajınızı yazınız"/>
+                                </Form.Item>
+
+                                <Form.Item>
+                                    <Button className={styles.formBtn} type="primary" htmlType="submit" loading={loading}>Gönder</Button>
+                                </Form.Item>
+                            </Form>
+                        </div>
+
+                    </div>
+
+                    <div>
+
+                        <div ref={mapContainerRef} id="map" style={{ width: '100%', height: '400px' }} />
+
                     </div>
                 </Col>
+                
+                {/* <Divider type="horizontal" style={{height: 'auto'}} /> */}
             </Row>
         </Footer>
     );
