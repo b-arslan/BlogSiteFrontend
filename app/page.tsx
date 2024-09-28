@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Layout, Row, Col, Card, Spin } from "antd";
 import styles from "./styles/page.module.scss";
 import axios from "axios";
@@ -20,7 +20,28 @@ interface Blog {
 const Home = () => {
     const [blogs, setBlogs] = useState<Blog[]>([]);
     const [loading, setLoading] = useState(true);
+    const [contentLimits, setContentLimits] = useState<{ [key: number]: number }>({});
     const router = useRouter();
+
+    const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+    const setCardRef = useCallback((node: HTMLDivElement | null, index: number) => {
+        if (node && !contentLimits[index]) { // Eğer limit önceden ayarlanmadıysa sadece o zaman hesapla
+            const cardHeight = node.offsetHeight;
+            const titleHeight = 60; // Kart başlığı için sabit yükseklik (yaklaşık)
+            const imageHeight = 180; // Karttaki resmin sabit yüksekliği
+            const padding = 32; // Kartın iç boşlukları (padding) toplamı
+            const availableHeight = cardHeight - titleHeight - imageHeight - padding;
+
+            // Her kelimenin ortalama yüksekliği 18px civarında olabilir (font-size ve line-height'a göre)
+            const wordsPerLine = Math.floor(availableHeight / 14);
+
+            setContentLimits((prev) => ({
+                ...prev,
+                [index]: wordsPerLine
+            }));
+        }
+    }, [contentLimits]);
 
     useEffect(() => {
         const getBlogs = async () => {
@@ -42,6 +63,14 @@ const Home = () => {
         }
     }, [blogs]);
 
+    const truncateByWords = (content: string, maxWords: number) => {
+        const wordsArray = content.split(' ');
+        if (wordsArray.length > maxWords) {
+            return wordsArray.slice(0, maxWords).join(' ') + '...';
+        }
+        return content;
+    };
+
     return (
         <Layout className={styles.layout}>
             <Content className={styles.content}>
@@ -56,10 +85,11 @@ const Home = () => {
                         </Col>
                     ) : (
                         <Col span={24} style={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5rem', flexWrap: 'wrap'}}>
-                            {blogs.map((blog) => (
+                            {blogs.map((blog, index) => (
                                 <Card
                                     key={blog.id}
                                     hoverable
+                                    ref={(node) => setCardRef(node, index)} // Her kart için referans belirliyoruz
                                     className='card-container'
                                     style={{ width: 300, height: 500 }}
                                     cover={
@@ -81,7 +111,7 @@ const Home = () => {
                                             <div
                                                 style={{ color: '#000' }}
                                                 dangerouslySetInnerHTML={{
-                                                    __html: `${blog.content.substring(0, 247)}...`,
+                                                    __html: truncateByWords(blog.content, contentLimits[index] || 0), // İçerik kelime sınırı
                                                 }}
                                             />
                                         }
