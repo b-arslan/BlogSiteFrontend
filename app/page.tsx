@@ -45,22 +45,6 @@ const Home = () => {
     return (
         <Layout className={styles.layout}>
             <Content className={styles.content}>
-                {/* <Row style={{ background: "transparent", padding: "24px 0px" }}>
-                    <Col span={24} style={{ textAlign: "center" }}>
-                        <h2>Giriş Metni Başlık</h2>
-                    </Col>
-
-                    <Col span={24} style={{ textAlign: "center" }}>
-                        <h3 style={{ margin: "2rem" }}>Kısa önsöz</h3>
-                    </Col>
-
-                    <Col span={24} style={{ textAlign: "center" }}>
-                        <p style={{ margin: "1rem" }}>
-                            AÇIKLAMA: Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                        </p>
-                    </Col>
-                </Row> */}
-
                 <Row style={{ width: '100%', height: '100%' }}>
                     <Col span={24} style={{display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '3rem'}}>
                         <h2 style={{fontSize: '1.9em'}}>Bloglar</h2>
@@ -76,7 +60,7 @@ const Home = () => {
                                 <Card
                                     hoverable
                                     className='card-container'
-                                    style={{ width: 300, height: 475 }}
+                                    style={{ width: 300, height: 500 }}
                                     cover={
                                         <img
                                             alt={blog.title}
@@ -88,7 +72,7 @@ const Home = () => {
                                 >
                                     <Meta
                                         title={
-                                            <div style={{ fontSize: '24px', fontWeight: 'bold' }}>
+                                            <div style={{ fontSize: '24px', fontWeight: 'bold', whiteSpace: 'normal', wordWrap: 'break-word' }}>
                                                 {blog.title}
                                             </div>
                                         }
