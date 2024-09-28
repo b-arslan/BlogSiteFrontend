@@ -28,17 +28,18 @@ export default function Blogs() {
     const blogId = searchParams.get('id'); // Seçili blogun ID'si
 
     useEffect(() => {
-        const handleResize = () => {
-            setIsMobileView(window.innerWidth < 1024);
-        };
-
-        handleResize();
-
-        window.addEventListener("resize", handleResize);
-
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        };
+        if (typeof window !== 'undefined') {
+            const handleResize = () => {
+                setIsMobileView(window.innerWidth < 1024);
+            };
+    
+            window.addEventListener("resize", handleResize);
+            handleResize();
+    
+            return () => {
+                window.removeEventListener("resize", handleResize);
+            };
+        }
     }, []);
 
     useEffect(() => {
