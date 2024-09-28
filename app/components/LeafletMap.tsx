@@ -30,7 +30,7 @@ const LeafletMap = () => {
     
           // Add a custom marker at Konya I&G Danışmanlık location
           L.marker(coordinates, { icon: customIcon }).addTo(map)
-            .bindPopup('İ&G Danışmanlık') // Customize the popup text
+            .bindPopup('İ&G Danışmanlık', { closeButton: false }) // Customize the popup text
             .openPopup(); // Popup will be open by default
     
           mapInstanceRef.current = map; // Store the map instance in the ref

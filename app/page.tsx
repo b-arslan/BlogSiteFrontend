@@ -45,7 +45,7 @@ const Home = () => {
     return (
         <Layout className={styles.layout}>
             <Content className={styles.content}>
-                <Row style={{ background: "transparent", padding: "24px 0px" }}>
+                {/* <Row style={{ background: "transparent", padding: "24px 0px" }}>
                     <Col span={24} style={{ textAlign: "center" }}>
                         <h2>Giriş Metni Başlık</h2>
                     </Col>
@@ -59,7 +59,7 @@ const Home = () => {
                             AÇIKLAMA: Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                         </p>
                     </Col>
-                </Row>
+                </Row> */}
 
                 <Row style={{ width: '100%', height: '100%' }}>
                     <Col span={24} style={{display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '3rem'}}>
