@@ -46,7 +46,7 @@ const Home = () => {
         <Layout className={styles.layout}>
             <Content className={styles.content}>
                 <Row style={{ width: '100%', height: '100%' }}>
-                    <Col span={24} style={{display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '3rem'}}>
+                    <Col span={24} style={{display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '3rem', flexWrap: 'wrap', gap: '2rem'}}>
                         <h2 style={{fontSize: '1.9em'}}>Bloglar</h2>
                     </Col>
 
@@ -55,9 +55,10 @@ const Home = () => {
                             <Spin indicator={<LoadingOutlined spin style={{ fontSize: '64px', color: '#000', marginTop: '2rem' }} />} />
                         </Col>
                     ) : (
-                        blogs.map((blog) => (
-                            <Col key={blog.id} span={24} style={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '2rem'}}>
+                        <Col span={24} style={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5rem', flexWrap: 'wrap'}}>
+                            {blogs.map((blog) => (
                                 <Card
+                                    key={blog.id}
                                     hoverable
                                     className='card-container'
                                     style={{ width: 300, height: 500 }}
@@ -86,8 +87,8 @@ const Home = () => {
                                         }
                                     />
                                 </Card>
-                            </Col>
-                        ))
+                            ))}
+                        </Col>
                     )}
                 </Row>
             </Content>
