@@ -1,7 +1,8 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import styles from '../styles/page.module.scss';
 
 const LeafletMap = () => {
     const mapContainerRef = useRef<HTMLDivElement>(null);
@@ -43,7 +44,7 @@ const LeafletMap = () => {
         };
     }, []);
 
-    return <div ref={mapContainerRef} style={{ height: '400px', width: '100%' }} />;
+    return <div ref={mapContainerRef} className={styles.map} />;
 };
 
 export default LeafletMap;
