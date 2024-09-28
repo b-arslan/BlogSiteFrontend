@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import "./styles/globals.scss";
 import { Inter } from "next/font/google";
 import HeaderComponent from "./components/HeaderComponent";
-import FooterComponent from "./components/FooterComponent";
 import Head from "next/head";
 import { Analytics } from '@vercel/analytics/react';
+import dynamic from 'next/dynamic';
+const FooterComponent = dynamic(() => import('./components/FooterComponent'), { ssr: false });
 
 const inter = Inter({ subsets: ["latin"] });
 
