@@ -25,7 +25,7 @@ const Home = () => {
     useEffect(() => {
         const getBlogs = async () => {
             try {
-                const response = await axios.get('https://blog-site-backend-ebon.vercel.app/api/blogposts');
+                const response = await axios.get('/api/blogposts');
                 setBlogs(response.data.content);
                 localStorage.setItem('blogData', JSON.stringify(response.data.content));
             } catch (error) {

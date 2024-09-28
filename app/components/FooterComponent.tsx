@@ -16,11 +16,13 @@ const { TextArea } = Input;
 
 const FooterComponent = () => {
     const [loading, setLoading] = useState(false);
+    const [isMobileView, setIsMobileView] = useState(false);
     const [form] = Form.useForm();
     const mapContainerRef = useRef<HTMLDivElement>(null);
     const mapInstanceRef = useRef<L.Map | null>(null);
 
     useEffect(() => {
+
         const coordinates: L.LatLngExpression = [37.86994421452708, 32.474147158457434]; // Coordinates for Konya I&G Danışmanlık
     
         if (!mapInstanceRef.current && mapContainerRef.current) {
@@ -46,12 +48,21 @@ const FooterComponent = () => {
     
           mapInstanceRef.current = map; // Store the map instance in the ref
         }
+
+        const handleResize = () => {
+            setIsMobileView(window.innerWidth < 1024);
+        };
+
+        handleResize();
+
+        window.addEventListener("resize", handleResize);
     
         return () => {
-          if (mapInstanceRef.current) {
-            mapInstanceRef.current.remove();
-            mapInstanceRef.current = null;
-          }
+            window.removeEventListener("resize", handleResize);
+            if (mapInstanceRef.current) {
+                mapInstanceRef.current.remove();
+                mapInstanceRef.current = null;
+            }
         };
     }, []);
 
@@ -71,10 +82,11 @@ const FooterComponent = () => {
                 `${process.env.EMAILJS_SERVICE_ID}`,     // EmailJS Service ID
                 `${process.env.EMAILJS_TEMPLATE_ID}`,    // EmailJS Template ID
                 {
-                    from_name: values.name,
-                    from_email: values.email,
+                    name: values.name,
+                    email: values.email,
                     message: values.content,
-                    emailTo: 'psikolog@mehmetaker.com'
+                    emailTo: 'psikolog@mehmetaker.com',
+                    reply_to: values.email
                 },
                 `${process.env.EMAILJS_PUBLIC_KEY}`       // Public Key
             ).then(
@@ -115,29 +127,31 @@ const FooterComponent = () => {
                     </div>
 
                 </Col>
-                <Divider type="horizontal"/>
-                <Col span={24} style={{marginTop: '2rem'}} className={styles.footerCol}>
-                
-                    <div style={{width: '49%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem', flexDirection: 'column'}}>
 
-                        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '3rem'}}>
-                            <div style={{textAlign: 'center', display: 'flex', gap: '1.5rem', flexDirection: 'column'}}>
+                <Divider type="horizontal"/>
+
+                <Col span={24} className={styles.footerCol}>
+                
+                    <div className={styles.adresDiv}>
+
+                        <div className={styles.adresHeaderDiv}>
+                            <div className={styles.adresHeaderTextDiv}>
                                 <h2 style={{fontSize: '24px'}}>Adres</h2>
-                                <p style={{fontSize: '16px'}}>Melikşah, Melikşah Cd. No:9 D:3, 42090 Meram/Konya</p>
+                                <p style={{fontSize: '18px'}}>Melikşah, Melikşah Cd. No:9 D:3, 42090 Meram/Konya</p>
                             </div>
                         </div>
 
-                        <div ref={mapContainerRef} id="map" style={{ width: '80%', height: '350px', border: '2px solid #c1c1c1', borderRadius: '12px' }} />
+                        <div ref={mapContainerRef} id="map" className={styles.map} />
                     </div>
 
-                    <Divider type="vertical" style={{height: '100%'}} />
+                    <Divider type={isMobileView ? 'horizontal' : 'vertical'} style={{height: '100%'}} />
 
-                    <div style={{width: '49%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '1rem'}}>
+                    <div className={styles.iletisimDiv}>
 
-                        <div  style={{display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '3rem'}}>
-                            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '1.5rem'}}>
+                        <div className={styles.iletisimHeaderDiv}>
+                            <div className={styles.iletisimHeaderTextDiv}>
                                 <h2 style={{fontSize: '24px'}}>İletişim</h2>
-                                <p style={{fontSize: '16px'}}>Bana ulaşın</p>
+                                <p style={{fontSize: '18px'}}>Bana ulaşın</p>
                             </div>
                         </div>
 
