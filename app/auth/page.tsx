@@ -88,7 +88,7 @@ const LoginPage = () => {
             <Content style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <Row>
                     <Col span={24} className={styles.myBoxShadow} >
-                        <h1>Admin Login</h1>
+                        <h1>Admin Giriş</h1>
                         <Form
                             name="basic"
                             labelCol={{ span: 24 }}
@@ -100,18 +100,18 @@ const LoginPage = () => {
                             autoComplete="off"
                         >
                             <Form.Item<FieldType>
-                                label="Username"
+                                label="E-Posta"
                                 name="username"
-                                rules={[{ required: true, message: 'Please input your username!' }]}
+                                rules={[{ required: true, message: 'Lütfen e-posta giriniz!' }]}
                                 style={{width: '100%', display: 'flex', flexDirection: 'column'}}
                             >
                                 <Input />
                             </Form.Item>
 
                             <Form.Item<FieldType>
-                                label="Password"
+                                label="Şifre"
                                 name="password"
-                                rules={[{ required: true, message: 'Please input your password!' }]}
+                                rules={[{ required: true, message: 'Lütfen şifre giriniz!' }]}
                                 style={{width: '100%'}}
                             >
                                 <Input.Password />
@@ -119,7 +119,7 @@ const LoginPage = () => {
 
                             <Form.Item style={{width: '100%'}} wrapperCol={{ span: 24 }}>
                                 <Button loading={loadingBtn} type="primary" htmlType="submit" style={{width: '100%'}}>
-                                    Log In
+                                    Giriş Yap
                                 </Button>
                             </Form.Item>
                         </Form>
