@@ -49,16 +49,20 @@ const FooterComponent = () => {
           mapInstanceRef.current = map; // Store the map instance in the ref
         }
 
-        const handleResize = () => {
-            setIsMobileView(window.innerWidth < 1024);
-        };
-
-        handleResize();
-
-        window.addEventListener("resize", handleResize);
+        if (typeof window !== 'undefined') {
+            const handleResize = () => {
+                setIsMobileView(window.innerWidth < 1024);
+            };
+    
+            window.addEventListener("resize", handleResize);
+            handleResize();
+    
+            return () => {
+                window.removeEventListener("resize", handleResize);
+            };
+        }
     
         return () => {
-            window.removeEventListener("resize", handleResize);
             if (mapInstanceRef.current) {
                 mapInstanceRef.current.remove();
                 mapInstanceRef.current = null;
