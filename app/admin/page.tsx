@@ -2,7 +2,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import { Button, Layout, Row, Col, Spin, Alert, message } from "antd";
+import { Button, Layout, Row, Col, Spin, Alert, message, Card, Statistic } from "antd";
 import {
     FileWordOutlined,
     PictureOutlined,
@@ -11,7 +11,7 @@ import {
 } from '@ant-design/icons';
 import styles from '../styles/admin.module.scss'; // Dark mode CSS'leri buraya ekleyeceğiz
 
-const { Content } = Layout;
+const { Content, Header } = Layout;
 
 const Admin = () => {
     const [darkMode, setDarkMode] = useState(false);
@@ -19,25 +19,55 @@ const Admin = () => {
     const [uploadedWordDocName, setUploadedWordDocName] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const wordInputRef = useRef<HTMLInputElement>(null);
-    const [isAuthorized, setIsAuthorized] = useState(false);
+    const [isAuthorized, setIsAuthorized] = useState(true);
     const [loadingBtn, setLoadingBtn] = useState(false);
     const [showSuccess, setShowSuccess] = useState(false);
     const [showError, setShowError] = useState(false);
+    const [totalViews, setTotalViews] = useState(0);
+    const [totalVisitor, setTotalVisitor] = useState(0);
     const router = useRouter();
 
     useEffect(() => {
+
+        const getViews = async () => {
+            try {
+        
+                const response = await axios.get('/api/getViews');
+                
+                if (response.data.success) {
+                    let datas: any[] = response.data.content;
+                    let totalView: number = 0;
+                    let totalVisitor: number = 0;
+                    datas.forEach(item => {
+                        if (item.view) {
+                            totalView += item.view;
+                        }
+                        totalVisitor += 1;
+                    })
+                    setTotalViews(totalView);
+                    setTotalVisitor(totalVisitor);
+                }
+                console.log('Tracking successful:', response.data);
+            } catch (error) {
+                console.error('Error tracking visitor:', error);
+            }
+        }
+
+        getViews();
+
         // Hide header and footer on admin page
         const header = document.getElementById('header-component');
-        const footer = document.getElementById('footer-component');
-    
-        if (header) header.style.display = 'none';
-        if (footer) footer.style.display = 'none';
-    
-        // Clean up when component unmounts
-        return () => {
-          if (header) header.style.display = 'block';
-          if (footer) footer.style.display = 'block';
-        };
+        debugger
+        setTimeout(() => {
+            const footer = document.getElementById('footer-component');
+            if (footer) footer.style.display = 'none';
+            if (header) header.style.display = 'none';
+            return () => {
+                if (footer) footer.style.display = 'block';
+                if (header) header.style.display = 'block';
+            };
+        }, 50);
+
     }, []);
 
     useEffect(() => {
@@ -141,82 +171,92 @@ const Admin = () => {
 
     return (
         <Layout style={{ height: '100vh', display: 'flex', flexDirection: 'column' }} className={darkMode ? styles.darkMode : ''}>
-          <Content className={darkMode ? styles.darkMode : ''} style={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <Row style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Col className={styles.adminBox} span={24} >
-                <div style={{position: 'absolute', top: '0', left: '0', width: '100%', textAlign: 'center', padding: '16px 16px' }}>
-                    <h2 style={{ color: darkMode ? '#fff' : '#000' }}>Blog Editör</h2>
-                </div>
-                
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '1rem' }}>
-                    {/* Middle Section with Buttons */}
-                    <div className={styles.secondDiv} style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                      <Button
-                        icon={<PictureOutlined />}
-                        onClick={() => fileInputRef.current?.click()}
-                        style={{ fontSize: '16px' }}
-                        disabled={!!uploadedImageName}
-                      >
-                        Kapak Fotoğrafı Yükle
-                      </Button>
-                      <input
-                        type="file"
-                        accept="image/*"
-                        ref={fileInputRef}
-                        style={{ display: 'none' }}
-                        onChange={handleCoverImageUpload}
-                      />
-    
-                      {uploadedImageName && (
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                          <span>{uploadedImageName}</span>
-                          <CloseOutlined onClick={handleImageRemove} style={{ cursor: 'pointer', color: 'red' }} />
-                        </div>
-                      )}
-                    </div>
-    
-                    <div className={styles.secondDiv} style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                      <Button
-                        icon={<FileWordOutlined />}
-                        onClick={() => wordInputRef.current?.click()}
-                        style={{ fontSize: '16px' }}
-                        disabled={!!uploadedWordDocName}
-                      >
-                        Word Dosyası Yükle
-                      </Button>
-                      <input
-                        type="file"
-                        accept=".doc,.docx"
-                        ref={wordInputRef}
-                        style={{ display: 'none' }}
-                        onChange={handleWordUpload}
-                      />
-    
-                      {uploadedWordDocName && (
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                          <span>{uploadedWordDocName}</span>
-                          <CloseOutlined onClick={handleWordRemove} style={{ cursor: 'pointer', color: 'red' }} />
-                        </div>
-                      )}
-                    </div>
-                </div>
-    
-                  {/* Footer Section */}
-                <div style={{ position: 'absolute', bottom: '0', left: '0', width: '100%', padding: '16px 36px' }}>
-                    <Button onClick={handleSubmit} loading={loadingBtn} style={{ width: '100%', background: darkMode ? '#555' : '#1890ff', color: darkMode ? '#fff' : '#fff' }}>Kaydet</Button>
-                </div>
+            <Header style={{background: 'transparent', borderBottom: '2px solid #c1c1c1', height: '15vh', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                <Row>
+                    <Col span={24} style={{textAlign: 'center'}}>
+                        <h1>Blog Editör</h1>
+                    </Col>
+                </Row>
+            </Header>
 
-              </Col>
-            </Row>
-    
-            {/* Alerts outside the Card, positioned at the top-right corner */}
-            {showSuccess && (
-              <Alert message="İşlem Başarılı!" type="success" style={{ position: 'fixed', top: '1rem', right: '1rem', width: '350px' }} />
-            )}
-            {showError && (
-              <Alert message="İşlem Başarısız!" type="error" style={{ position: 'fixed', top: '1rem', right: '1rem', width: '350px' }} />
-            )}
-          </Content>
+            <Content className={darkMode ? styles.darkMode : ''} style={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'row', gap: '5rem', padding: '24px', height: '85vh' }}>
+
+                <Row style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Col className={styles.adminBox} span={24} >
+                        <div style={{position: 'absolute', top: '0', width: '100%', textAlign: 'center', padding: '16px 16px'}}>
+                            <h3>Toplam Görüntülenme: {totalViews}</h3>
+                            <h3 style={{marginTop: '0.5rem'}}>Toplam Ziyaretçi: {totalVisitor}</h3>
+                        </div>
+                        
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '1rem' }}>
+                            {/* Middle Section with Buttons */}
+                            <div className={styles.secondDiv} style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                            <Button
+                                icon={<PictureOutlined />}
+                                onClick={() => fileInputRef.current?.click()}
+                                style={{ fontSize: '16px' }}
+                                disabled={!!uploadedImageName}
+                            >
+                                Kapak Fotoğrafı Yükle
+                            </Button>
+                            <input
+                                type="file"
+                                accept="image/*"
+                                ref={fileInputRef}
+                                style={{ display: 'none' }}
+                                onChange={handleCoverImageUpload}
+                            />
+            
+                            {uploadedImageName && (
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                <span>{uploadedImageName}</span>
+                                <CloseOutlined onClick={handleImageRemove} style={{ cursor: 'pointer', color: 'red' }} />
+                                </div>
+                            )}
+                            </div>
+            
+                            <div className={styles.secondDiv} style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                            <Button
+                                icon={<FileWordOutlined />}
+                                onClick={() => wordInputRef.current?.click()}
+                                style={{ fontSize: '16px' }}
+                                disabled={!!uploadedWordDocName}
+                            >
+                                Word Dosyası Yükle
+                            </Button>
+                            <input
+                                type="file"
+                                accept=".doc,.docx"
+                                ref={wordInputRef}
+                                style={{ display: 'none' }}
+                                onChange={handleWordUpload}
+                            />
+            
+                            {uploadedWordDocName && (
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                <span>{uploadedWordDocName}</span>
+                                <CloseOutlined onClick={handleWordRemove} style={{ cursor: 'pointer', color: 'red' }} />
+                                </div>
+                            )}
+                            </div>
+                        </div>
+            
+                        {/* Footer Section */}
+                        <div style={{ position: 'absolute', bottom: '0', left: '0', width: '100%', padding: '16px 36px' }}>
+                            <Button onClick={handleSubmit} loading={loadingBtn} style={{ width: '100%', background: darkMode ? '#555' : '#1890ff', color: darkMode ? '#fff' : '#fff' }}>Kaydet</Button>
+                        </div>
+
+                    </Col>
+                </Row>
+        
+                {/* Alerts outside the Card, positioned at the top-right corner */}
+                {showSuccess && (
+                <Alert message="İşlem Başarılı!" type="success" style={{ position: 'fixed', top: '1rem', right: '1rem', width: '350px' }} />
+                )}
+                {showError && (
+                <Alert message="İşlem Başarısız!" type="error" style={{ position: 'fixed', top: '1rem', right: '1rem', width: '350px' }} />
+                )}
+            </Content>
         </Layout>
     );
 };

@@ -5,6 +5,7 @@ import styles from "./styles/page.module.scss";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { LoadingOutlined } from "@ant-design/icons";
+import { v4 as uuidv4 } from 'uuid';
 
 const { Content } = Layout;
 const { Meta } = Card;
@@ -54,7 +55,27 @@ const Home = () => {
             }
         };
 
+        const trackVisitors = async (param?: any) => {
+            try {
+                let visitorId = localStorage.getItem('aker_visitor_id');
+        
+                if (!visitorId) {
+                    visitorId = uuidv4();
+                    localStorage.setItem('aker_visitor_id', visitorId);
+                }
+        
+                const response = await axios.post('/api/view', {
+                    visitor: param ? param : visitorId
+                });
+        
+                console.log('Tracking successful:', response.data);
+            } catch (error) {
+                console.error('Error tracking visitor:', error);
+            }
+        };
+
         getBlogs();
+        trackVisitors();
     }, []);
 
     useEffect(() => {

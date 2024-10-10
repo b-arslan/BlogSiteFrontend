@@ -6,6 +6,7 @@ import { Suspense } from "react";
 import styles from '../styles/page.module.scss';
 import axios from "axios";
 import { ArrowLeftOutlined } from "@ant-design/icons";
+import { v4 as uuidv4 } from 'uuid';
 
 const { Content } = Layout;
 
@@ -40,6 +41,27 @@ export default function Blogs() {
                 window.removeEventListener("resize", handleResize);
             };
         }
+
+        const trackVisitors = async (param?: any) => {
+            try {
+                let visitorId = localStorage.getItem('aker_visitor_id');
+        
+                if (!visitorId) {
+                    visitorId = uuidv4();
+                    localStorage.setItem('aker_visitor_id', visitorId);
+                }
+        
+                const response = await axios.post('/api/view', {
+                    visitor: param ? param : visitorId
+                });
+        
+                console.log('Tracking successful:', response.data);
+            } catch (error) {
+                console.error('Error tracking visitor:', error);
+            }
+        };
+
+        trackVisitors();
     }, []);
 
     useEffect(() => {
