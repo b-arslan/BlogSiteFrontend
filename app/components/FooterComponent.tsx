@@ -108,7 +108,7 @@ const FooterComponent = () => {
                         <div className={styles.adresHeaderDiv}>
                             <div className={styles.adresHeaderTextDiv}>
                                 <h2 style={{fontSize: '24px'}}>Adres</h2>
-                                <p style={{fontSize: '18px'}}>Melikşah, Melikşah Cd. No:9 D:3, 42090 Meram/Konya</p>
+                                <p style={{fontSize: '18px'}}>Melikşah, Melikşah Cd. No: 9 D: 3, 42090 Meram/Konya</p>
                             </div>
                         </div>
 
@@ -122,7 +122,7 @@ const FooterComponent = () => {
                         <div className={styles.iletisimHeaderDiv}>
                             <div className={styles.iletisimHeaderTextDiv}>
                                 <h2 style={{fontSize: '24px'}}>İletişim</h2>
-                                <p style={{fontSize: '18px'}}>Bana ulaşın</p>
+                                <p style={{fontSize: '18px'}}>Bize ulaşın</p>
                             </div>
                         </div>
 
