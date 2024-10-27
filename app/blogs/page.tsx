@@ -69,7 +69,7 @@ export default function Blogs() {
         
         if (blogDataString) {
             const blogData: Blog[] = JSON.parse(blogDataString);
-            blogData.reverse(); // Verileri ters çevir
+            //blogData.reverse(); // Verileri ters çevir
             setBlogs(blogData);
     
             if (blogId) {
