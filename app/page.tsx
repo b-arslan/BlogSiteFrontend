@@ -124,7 +124,7 @@ const Home = () => {
                                 >
                                     <Meta
                                         title={
-                                            <div style={{ fontSize: '24px', fontWeight: 'bold', whiteSpace: 'normal', wordWrap: 'break-word' }}>
+                                            <div style={{ fontSize: '22px', fontWeight: 'bold', whiteSpace: 'normal', wordWrap: 'break-word' }}>
                                                 {blog.title}
                                             </div>
                                         }
