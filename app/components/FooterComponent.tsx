@@ -9,6 +9,10 @@ import {
 import styles from "../styles/page.module.scss";
 import emailjs from '@emailjs/browser';
 import dynamic from 'next/dynamic';
+import Instagram from '../../public/instagram.png';
+import Linkedin from '../../public/linkedin.png';
+import Mail from '../../public/email.png';
+import Image from "next/image";
 
 const { Footer } = Layout;
 const { TextArea } = Input;
@@ -90,9 +94,13 @@ const FooterComponent = () => {
                         <h2 style={{fontSize: '24px'}}>Sosyal</h2>
 
                         <div style={{display: 'flex', flexDirection: 'column'}}>
-                            <Button type="text" className={styles.instagram} onClick={() => window.open("https://www.instagram.com/psikolog.mehmetaker/")}><InstagramOutlined className={styles.iconBtn} /> Instagram</Button>
+                            {/* <Button type="text" className={styles.instagram} onClick={() => window.open("https://www.instagram.com/psikolog.mehmetaker/")}><InstagramOutlined className={styles.iconBtn} /> Instagram</Button>
                             <Button type="text" className={styles.linkedin} onClick={() => window.open("https://www.linkedin.com/in/pskmehmetaker/")}><LinkedinOutlined className={styles.iconBtn} /> LinkedIn</Button>
-                            <Button type="text" className={styles.mailIcon} onClick={copyToClipboard}><MailOutlined className={styles.iconBtn} /> psikolog@mehmetaker.com</Button>  
+                            <Button type="text" className={styles.mailIcon} onClick={copyToClipboard}><MailOutlined className={styles.iconBtn} /> psikolog@mehmetaker.com</Button>   */}
+                            <Button type="text" className={styles.instagram} onClick={() => window.open("https://www.instagram.com/psikolog.mehmetaker/")}><Image src={Instagram} alt="instagram logo" className={styles.iconBtn} style={{width: '36px', height: '36px'}} /> Instagram</Button>
+                            <Button type="text" className={styles.linkedin} onClick={() => window.open("https://www.linkedin.com/in/pskmehmetaker/")}><Image src={Linkedin} alt="linkedin logo" className={styles.iconBtn} style={{width: '36px', height: '36px'}} /> LinkedIn</Button>
+                            {/* <Button type="text" className={styles.mailIcon} onClick={copyToClipboard}><Image src={Mail} alt="email logo" className={styles.iconBtnMail} style={{width: '36px', height: '36px'}} /> psikolog@mehmetaker.com</Button>   */}
+                            <Button type="text" className={styles.mailIcon} onClick={() => window.open("https://mail.google.com/mail/?view=cm&fs=1&to=psikolog@mehmetaker.com")}><Image src={Mail} alt="email logo" className={styles.iconBtnMail} style={{width: '36px', height: '36px'}} /> psikolog@mehmetaker.com</Button>  
                         </div>
                         </div>
                     </div>
@@ -122,22 +130,22 @@ const FooterComponent = () => {
                         <div className={styles.iletisimHeaderDiv}>
                             <div className={styles.iletisimHeaderTextDiv}>
                                 <h2 style={{fontSize: '24px'}}>İletişim</h2>
-                                <p style={{fontSize: '18px'}}>Bize ulaşın</p>
+                                <p style={{fontSize: '18px'}}>Bize Ulaşın</p>
                             </div>
                         </div>
 
                         <div style={{width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                             <Form form={form} name="contact" layout="vertical" onFinish={onFinish} className={styles.contactForm}>
-                                <Form.Item label='Adınız' name='name' rules={[{required: true, message: 'Lütfen adınızı giriniz!'}]}>
+                                <Form.Item label='Adınız' name='name' rules={[{required: true, message: 'Lütfen Adınızı Giriniz!'}]}>
                                     <Input className={styles.formInput} placeholder="Adınızı giriniz"/>
                                 </Form.Item>
 
-                                <Form.Item label='E-posta' name='email' rules={[{required: true, message: 'Lütfen e-posta adresinizi giriniz!'}, {type: 'email', message: 'Lütfen geçerli bir e-posta adresi giriniz!'}]}>
+                                <Form.Item label='E-posta' name='email' rules={[{required: true, message: 'Lütfen E-posta Adresinizi Giriniz!'}, {type: 'email', message: 'Lütfen geçerli bir e-posta adresi giriniz!'}]}>
                                     <Input className={styles.formInput} placeholder="E-posta adresinizi giriniz"/>
                                 </Form.Item>
 
-                                <Form.Item label='Mesaj' name='content' rules={[{required: true, message: 'Lütfen mesajınızı giriniz!'}]}>
-                                    <TextArea autoSize showCount maxLength={500} className={styles.formInput} rows={7} placeholder="Mesajınızı yazınız"/>
+                                <Form.Item label='Mesaj' name='content' rules={[{required: true, message: 'Lütfen Mesajınızı Giriniz!'}]}>
+                                    <TextArea autoSize showCount maxLength={500} className={styles.formInput} rows={7} placeholder="Mesajınızı Yazınız"/>
                                 </Form.Item>
 
                                 <Form.Item>

@@ -115,6 +115,7 @@
     color: #000;
     background: transparent;
     border: none;
+    margin-top: 10px;
     @media (max-width: 468px) {
         font-size: 18px;
         display: flex;
@@ -184,6 +185,11 @@
 }
 
 .iconBtn {
+    @media (max-width: 468px) {
+        margin-top: 3px;
+    }
+}
+.iconBtnMail {
     @media (max-width: 468px) {
         margin-top: 3px;
     }
