@@ -145,7 +145,7 @@ const FooterComponent = () => {
                                 </Form.Item>
 
                                 <Form.Item label='Mesaj' name='content' rules={[{required: true, message: 'Lütfen Mesajınızı Giriniz!'}]}>
-                                    <TextArea autoSize showCount maxLength={500} className={styles.formInput} rows={7} placeholder="Mesajınızı Yazınız"/>
+                                    <TextArea autoSize showCount maxLength={500} className={styles.formInput} rows={7} placeholder="Mesajınızı yazınız"/>
                                 </Form.Item>
 
                                 <Form.Item>
