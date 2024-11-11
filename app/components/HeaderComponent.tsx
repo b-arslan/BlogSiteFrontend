@@ -3,7 +3,7 @@ import { EditOutlined, UserOutlined } from "@ant-design/icons";
 import styles from "../styles/page.module.scss";
 import { Button, Layout } from "antd";
 import Image from "next/image";
-import PSILogo from "../../public/favicon.ico";
+import PSILogo from "../../public/psi.ico";
 import { useRouter } from "next/navigation";
 
 const { Header } = Layout;
