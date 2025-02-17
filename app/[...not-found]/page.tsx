@@ -12,7 +12,6 @@ const NotFoundPage = () => {
     useEffect(() => {
         // Hide header and footer on not found page
         const header = document.getElementById('header-component');
-        debugger
         setTimeout(() => {
             const footer = document.getElementById('footer-component');
             if (footer) footer.style.display = 'none';
