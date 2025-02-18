@@ -14,7 +14,7 @@ const HeaderComponent = () => {
     return (
         <Header id="header-component" className={styles.header} style={{ background: "#ffffff", padding: "12px 24px", textAlign: 'center' }}>
             <div className={styles.headerRow}>
-                <div className={styles.headerCol1} onClick={() => router.push("/")}>
+                <div className={styles.headerCol1}>
                     <Image
                         className={styles.logoHeader}
                         src={PSILogo}
@@ -22,6 +22,7 @@ const HeaderComponent = () => {
                     />
                     <h1
                         className={styles.titleHeader}
+                        onClick={() => router.push("/")}
                     >
                         
                         Psikolog Mehmet Aker
