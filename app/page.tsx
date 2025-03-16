@@ -112,12 +112,12 @@ const Home = () => {
                                     hoverable
                                     ref={(node) => setCardRef(node, index)} // Her kart için referans belirliyoruz
                                     className='card-container'
-                                    style={{ width: 300, height: 500 }}
+                                    style={{ width: 350, height: 600 }}
                                     cover={
                                         <img
                                             alt={blog.title}
                                             src={blog.cover_image_url}
-                                            style={{ width: 300, height: 180, objectFit: 'cover' }}
+                                            style={{ width: 350, height: 180, objectFit: 'cover' }}
                                         />
                                     }
                                     onClick={() => router.push(`/blogs?id=${blog.id}`)}
