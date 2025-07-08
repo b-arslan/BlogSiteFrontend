@@ -19,7 +19,7 @@ const About = () => {
                             {/* <h1 style={{ alignSelf: 'center', marginTop: '24px' }}>Hakkımda</h1> */}
                             <div className={styles.mySecDiv}>
                                 <div>
-                                    <Image src={ProfileImg} alt='Profil Resmi' className={styles.profileImg}></Image>
+                                    <Image priority={true} src={ProfileImg} alt='Profil Resmi' className={styles.profileImg}></Image>
                                 </div>
 
                                 <div>
