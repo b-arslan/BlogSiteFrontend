@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Psikolog Mehmet Aker Blog Sitesi - Frontend
 
-## Getting Started
+Bu proje, Psikolog Mehmet Aker için hazırlanmış modern ve kullanıcı dostu bir blog ve tanıtım sitesinin frontend uygulamasıdır. Kullanıcılar blog yazılarını okuyabilir, iletişim formu ile mesaj gönderebilir, sosyal medya hesaplarına ulaşabilir ve psikolog hakkında detaylı bilgi edinebilirler.
 
-First, run the development server:
+## Özellikler
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Blog Sistemi:** Blog yazılarını listeleme, detaylarını görüntüleme ve kapak görselleri/video desteği.
+- **Hakkımda Sayfası:** Psikolog Mehmet Aker’in özgeçmişi ve mesleki deneyimleri.
+- **İletişim Formu:** EmailJS entegrasyonu ile doğrudan iletişim.
+- **Sosyal Medya:** Instagram ve LinkedIn entegrasyonu.
+- **Harita:** Leaflet ile adres haritası.
+- **Admin Paneli:** Blog ekleme (Word dosyası ve kapak görseli ile), toplam görüntülenme ve ziyaretçi istatistikleri.
+- **Responsive Tasarım:** Tüm cihazlarda modern ve uyumlu görünüm.
+- **Kapsamlı hata yönetimi ve kullanıcıya geri bildirimler.**
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Teknolojiler
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Next.js 14**
+- **React 18**
+- **TypeScript**
+- **Ant Design**
+- **Sass/SCSS**
+- **Leaflet**
+- **EmailJS**
+- **Axios**
+- **Styled Components**
+- **Vercel Analytics**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Kullanım
 
-## Learn More
+- **Bloglar:** Ana sayfa ve /blogs üzerinden blog yazılarını görüntüleyebilirsiniz.
+- **Hakkımda:** /about sayfasında psikolog hakkında detaylı bilgi bulabilirsiniz.
+- **İletişim:** Footer’daki form ile doğrudan mesaj gönderebilirsiniz.
+- **Admin Paneli:** /auth ile giriş yaparak blog ekleyebilir ve istatistikleri görebilirsiniz.
 
-To learn more about Next.js, take a look at the following resources:
+## Dosya Yapısı
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `app/` - Sayfa ve bileşenler
+- `public/` - Statik dosyalar (görseller, favicon, json, sitemap, robots.txt)
+- `app/styles/` - SCSS dosyaları
+- `app/components/` - Header, Footer, Harita gibi bileşenler
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Geliştirici Bilgileri
 
-## Deploy on Vercel
+- **Blog ve içerik yönetimi:** Admin paneli üzerinden Word dosyası ve kapak görseli ile kolay blog ekleme.
+- **API entegrasyonu:** Tüm veri işlemleri için backend API ile iletişim.
+- **Ziyaretçi ve görüntülenme takibi:** Otomatik olarak localStorage ve backend ile takip.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

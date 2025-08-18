@@ -47,7 +47,7 @@ const LeafletMap = () => {
             const marker = L.marker(coordinates, { icon: customIcon })
                 .addTo(map)
                 .on("click", () => {
-                    window.open(googleMapsUrl, "_blank"); 
+                    window.open(googleMapsUrl, "_blank");
                 })
                 .bindPopup(popup)
                 .openPopup();
