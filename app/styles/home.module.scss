@@ -1,0 +1,201 @@
+/* ---------------- Hero ---------------- */
+
+.hero {
+    padding-block: clamp(4rem, 11vw, 8.5rem) clamp(3rem, 7vw, 5.5rem);
+    background: linear-gradient(180deg, var(--accent-soft) 0%, var(--bg) 100%);
+    border-bottom: 1px solid var(--line);
+}
+
+.heroInner {
+    text-align: center;
+}
+
+.heroTitle {
+    max-width: 18ch;
+    margin-inline: auto;
+}
+
+.heroEm {
+    font-style: italic;
+    color: var(--accent);
+}
+
+.heroLede {
+    max-width: 56ch;
+    margin: 1.5rem auto 0;
+}
+
+.heroActions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.85rem;
+    margin-top: 2.25rem;
+}
+
+/* ---------------- Section headings ---------------- */
+
+.sectionHead {
+    max-width: 46ch;
+    margin-bottom: 3rem;
+}
+
+.sectionHeadRow {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+}
+
+.textLink {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--accent);
+    white-space: nowrap;
+}
+
+.textLink:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+/* ---------------- Intro ---------------- */
+
+.introSection {
+    border-bottom: 1px solid var(--line);
+}
+
+.intro {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 3.5rem;
+    align-items: start;
+}
+
+.introBody {
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+    align-items: flex-start;
+    color: var(--ink-soft);
+    font-size: 1.05rem;
+}
+
+/* ---------------- Work areas ---------------- */
+
+.areaGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 1.25rem;
+}
+
+.areaCard {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 1.75rem;
+    background: var(--bg-raised);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    transition: border-color 0.2s ease, transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.areaCard:hover {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+}
+
+.areaTag {
+    align-self: flex-start;
+    padding: 0.25rem 0.65rem;
+    background: var(--accent-soft);
+    color: var(--accent-ink);
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.045em;
+    text-transform: uppercase;
+}
+
+.areaTitle {
+    margin-top: 1rem;
+    font-size: 1.3rem;
+}
+
+.areaSummary {
+    margin-top: 0.7rem;
+    font-size: 0.96rem;
+    color: var(--ink-muted);
+}
+
+/* ---------------- Posts ---------------- */
+
+.postGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.75rem;
+}
+
+.faqMore {
+    margin-top: 2rem;
+}
+
+/* ---------------- CTA ---------------- */
+
+.cta {
+    padding-block: clamp(3.5rem, 8vw, 6rem);
+    background: var(--accent-deep);
+    color: #fff;
+}
+
+.ctaInner {
+    text-align: center;
+}
+
+.ctaTitle {
+    color: #fff;
+}
+
+.ctaText {
+    max-width: 52ch;
+    margin: 1.25rem auto 0;
+    color: rgb(255 255 255 / 0.82);
+}
+
+.cta :global(.btn-primary) {
+    background: #fff;
+    color: var(--accent-ink);
+}
+
+.cta :global(.btn-primary):hover {
+    background: var(--accent-soft);
+}
+
+.cta :global(.btn-secondary) {
+    border-color: rgb(255 255 255 / 0.35);
+    color: #fff;
+}
+
+.cta :global(.btn-secondary):hover {
+    border-color: #fff;
+    color: #fff;
+    background: rgb(255 255 255 / 0.1);
+}
+
+/* ---------------- Responsive ---------------- */
+
+@media (max-width: 860px) {
+    .intro {
+        grid-template-columns: 1fr;
+        gap: 1.75rem;
+    }
+
+    .sectionHead,
+    .sectionHeadRow {
+        margin-bottom: 2.25rem;
+    }
+}

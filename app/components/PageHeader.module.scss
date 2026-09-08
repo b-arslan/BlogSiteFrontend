@@ -1,0 +1,15 @@
+.header {
+    padding-block: clamp(3rem, 7vw, 5rem) clamp(2rem, 4vw, 3rem);
+    background: linear-gradient(180deg, var(--accent-soft) 0%, var(--bg) 100%);
+    border-bottom: 1px solid var(--line);
+}
+
+.title {
+    max-width: 20ch;
+    font-size: var(--step-3);
+}
+
+.lede {
+    max-width: 58ch;
+    margin-top: 1.25rem;
+}

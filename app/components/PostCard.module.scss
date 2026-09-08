@@ -1,0 +1,81 @@
+.card {
+    background: var(--bg-raised);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: border-color 0.2s ease, transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.card:hover {
+    border-color: var(--line-strong);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+}
+
+.link {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.media {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    background: var(--bg-sunken);
+    overflow: hidden;
+}
+
+.image {
+    object-fit: cover;
+}
+
+.mediaFallback {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--accent-soft), var(--bg-sunken));
+}
+
+.body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 1.4rem 1.5rem 1.6rem;
+}
+
+.date {
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+}
+
+.title {
+    font-size: 1.22rem;
+    line-height: 1.3;
+    margin-top: 0.5rem;
+
+    /* Two lines max, so cards in a row stay aligned. */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.excerpt {
+    margin-top: 0.7rem;
+    font-size: 0.95rem;
+    color: var(--ink-muted);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.more {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--accent);
+    margin-top: auto;
+    padding-top: 1.15rem;
+}

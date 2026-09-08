@@ -1,0 +1,23 @@
+.press {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-top: 3.5rem;
+    padding: 2.25rem;
+    background: var(--accent-soft);
+    border-radius: var(--radius-lg);
+}
+
+.pressTitle {
+    font-size: var(--step-1);
+    max-width: 24ch;
+}
+
+.pressText {
+    margin-top: 0.7rem;
+    max-width: 46ch;
+    color: var(--ink-soft);
+    font-size: 0.98rem;
+}

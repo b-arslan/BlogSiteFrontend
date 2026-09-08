@@ -1,0 +1,40 @@
+.header {
+    padding-block: clamp(2.5rem, 6vw, 4rem) 2rem;
+}
+
+.back {
+    display: inline-block;
+    font-size: 0.9rem;
+    color: var(--ink-muted);
+    margin-bottom: 1.5rem;
+}
+
+.back:hover {
+    color: var(--accent);
+}
+
+.title {
+    font-size: var(--step-3);
+    max-width: 24ch;
+}
+
+.meta {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: var(--ink-muted);
+}
+
+.media {
+    margin-bottom: 2.5rem;
+}
+
+.cover,
+.video {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+}
+
+.bodyWrap {
+    padding-bottom: clamp(3rem, 7vw, 5rem);
+}

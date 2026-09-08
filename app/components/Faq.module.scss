@@ -1,0 +1,71 @@
+.list {
+    border-top: 1px solid var(--line);
+}
+
+.item {
+    border-bottom: 1px solid var(--line);
+}
+
+.question {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 1.25rem 0;
+    font-size: 1.05rem;
+    font-weight: 500;
+    cursor: pointer;
+    list-style: none;
+    transition: color 0.18s ease;
+}
+
+/* Hide the default disclosure triangle in Safari/Chrome. */
+.question::-webkit-details-marker {
+    display: none;
+}
+
+.question:hover {
+    color: var(--accent);
+}
+
+.icon {
+    position: relative;
+    flex-shrink: 0;
+    width: 14px;
+    height: 14px;
+    margin-top: 0.35rem;
+}
+
+.icon::before,
+.icon::after {
+    content: "";
+    position: absolute;
+    background: var(--accent);
+    border-radius: 2px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.icon::before {
+    top: 6px;
+    left: 0;
+    width: 14px;
+    height: 2px;
+}
+
+.icon::after {
+    top: 0;
+    left: 6px;
+    width: 2px;
+    height: 14px;
+}
+
+.item[open] .icon::after {
+    transform: rotate(90deg);
+    opacity: 0;
+}
+
+.answer {
+    padding: 0 0 1.5rem;
+    max-width: 62ch;
+    color: var(--ink-soft);
+}
